@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap — replace nuviodev.com with real URL
+Sitemap: https://nuviodev.com/sitemap.xml

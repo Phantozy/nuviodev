@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="sr" data-lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuvio Development | Izrada Web Sajtova i Mobilnih Aplikacija</title>
+
+<!-- ═══════════════════════════════════════════
+     SEO — replace nuviodev.com with real URL
+     ═══════════════════════════════════════════ -->
+
+<!-- Core SEO -->
+<meta name="description" content="Nuvio Development: profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi i moderni sajtovi od 400€. Besplatna procena! ☎ +381 65 638 2930">
+<meta name="keywords" content="izrada web sajta, izrada web sajtova, web dizajn Srbija, mobilne aplikacije Srbija, web development Srbija, izrada sajta Beograd, web programiranje Srbija, React Next.js developer Srbija, mobilna aplikacija iOS Android Srbija, izrada sajta cena">
+<meta name="author" content="Nuvio Development">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="theme-color" content="#0d0d14">
+<meta name="format-detection" content="telephone=yes, address=yes">
+
+<!-- Geo targeting — Serbia -->
+<meta name="geo.region" content="RS">
+<meta name="geo.country" content="Serbia">
+<meta name="geo.placename" content="Srbija">
+<meta name="ICBM" content="44.0165, 21.0059">
+
+<!-- Canonical & hreflang -->
+<link rel="canonical" href="https://nuviodev.com/">
+<link rel="alternate" hreflang="sr" href="https://nuviodev.com/">
+<link rel="alternate" hreflang="x-default" href="https://nuviodev.com/">
+
+<!-- Open Graph (Facebook, LinkedIn, Viber previews) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nuviodev.com/">
+<meta property="og:title" content="Nuvio Development | Izrada Web Sajtova i Aplikacija u Srbiji">
+<meta property="og:description" content="Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi sajtovi koji se dobro rangiraju. Besplatna procena!">
+<meta property="og:image" content="https://nuviodev.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nuvio Development — Izrada Web Sajtova i Mobilnih Aplikacija">
+<meta property="og:locale" content="sr_RS">
+<meta property="og:site_name" content="Nuvio Development">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nuvio Development | Izrada Web Sajtova i Aplikacija u Srbiji">
+<meta name="twitter:description" content="Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi sajtovi koji se dobro rangiraju.">
+<meta name="twitter:image" content="https://nuviodev.com/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://nuviodev.com/#organization",
+      "name": "Nuvio Development",
+      "url": "https://nuviodev.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nuviodev.com/logo.png"
+      },
+      "description": "Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi i moderni sajtovi visokih performansi.",
+      "email": "nuvio.devgroup@gmail.com",
+      "telephone": "+381656382930",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Beograd",
+        "addressCountry": "RS",
+        "addressRegion": "Srbija"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Serbia"
+      },
+      "priceRange": "€€",
+      "foundingDate": "2020",
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": "5"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nuviodev.com/#website",
+      "url": "https://nuviodev.com/",
+      "name": "Nuvio Development",
+      "inLanguage": "sr-RS",
+      "publisher": { "@id": "https://nuviodev.com/#organization" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://nuviodev.com/#localbusiness",
+      "name": "Nuvio Development",
+      "url": "https://nuviodev.com/",
+      "image": "https://nuviodev.com/og-image.jpg",
+      "telephone": "+381656382930",
+      "email": "nuvio.devgroup@gmail.com",
+      "priceRange": "€€",
+      "description": "Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani sajtovi koji se brzo učitavaju i dobro rangiraju na Googleu.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Beograd",
+        "addressCountry": "RS",
+        "addressRegion": "Srbija"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Beograd" },
+        { "@type": "City", "name": "Novi Sad" },
+        { "@type": "City", "name": "Niš" },
+        { "@type": "Country", "name": "Serbia" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Web i Mobilne Usluge",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Izrada Web Sajtova",
+              "description": "Ručno kodirana web rešenja visokih performansi bez WordPress šablona"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "minPrice": "400",
+              "priceCurrency": "EUR"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Mobilne Aplikacije",
+              "description": "Nativne i cross-platform mobilne aplikacije za iOS i Android"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "UI/UX Dizajn",
+              "description": "Profesionalni dizajn u Figma: wireframe, prototip i finalni dizajn"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "SEO i Performanse",
+              "description": "Tehnička SEO optimizacija za bolji Google ranking i Core Web Vitals"
+            }
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "50",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Koliko košta izrada web sajta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 400€, dok kompleksne web aplikacije mogu biti i 2000€+. Nakon razgovora dajemo besplatnu procenu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Koliko traje izrada web sajta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Da li pružate podršku nakon lansiranja?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Da li mogu da vidim sajt pre lansiranja?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Radite li mobilne aplikacije za iOS i Android?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ═══════════════════════════════════════════ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- PROGRESS BAR -->
+<div id="progress"></div>
+
+<!-- ORBS -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    Nuvio<span>Development</span><div class="logo-dot"></div>
+  </a>
+  <div class="nav-links">
+    <a href="#services" data-sr="Usluge" data-en="Services">Usluge</a>
+    <a href="#process" data-sr="Proces" data-en="Process">Proces</a>
+    <a href="#projects" data-sr="Projekti" data-en="Projects">Projekti</a>
+    <a href="#tech" data-sr="Tech" data-en="Tech">Tech</a>
+    <a href="#faq" data-sr="FAQ" data-en="FAQ">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-sr" aria-label="Srpski" title="Srpski"></button>
+      <button class="lang-btn" id="btn-en" aria-label="English" title="English"></button>
+    </div>
+    <a href="#contact" class="nav-cta" data-sr="Kontaktiraj nas" data-en="Contact Us">Kontaktiraj nas</a>
+  </div>
+  <button class="hamburger" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#services" data-sr="Usluge" data-en="Services">Usluge</a>
+  <a href="#process" data-sr="Proces" data-en="Process">Proces</a>
+  <a href="#projects" data-sr="Projekti" data-en="Projects">Projekti</a>
+  <a href="#tech" data-sr="Tech" data-en="Tech">Tech</a>
+  <a href="#faq" data-sr="FAQ" data-en="FAQ">FAQ</a>
+  <a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">
+    <div class="hero-badge-dot"></div>
+    <span data-sr="🚀 Dostupni za nove projekte" data-en="🚀 Available for new projects">🚀 Dostupni za nove projekte</span>
+  </div>
+  <h1 class="hero-title">
+    <span class="line" data-sr="Kreiramo" data-en="We create">Kreiramo</span>
+    <span class="line"><span class="accent-fill" data-sr="web stranice" data-en="websites">web stranice</span></span>
+    <span class="line" data-sr="i mobilne aplikacije" data-en="and mobile apps">i <span class="accent-word">mobilne aplikacije</span></span>
+  </h1>
+  <p class="hero-sub" data-sr="Ručno kodirana, brza i moderna web i mobilna rešenja koja privlače korisnike i donose konkretne poslovne rezultate." data-en="Hand-coded, fast and modern web and mobile solutions that attract users and deliver real business results.">
+    Ručno kodirana, brza i moderna web i mobilna rešenja koja privlače korisnike i donose konkretne poslovne rezultate.
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary" data-sr="Pokreni projekat →" data-en="Start a Project →">Pokreni projekat →</a>
+    <a href="#projects" class="btn-secondary" data-sr="Pogledaj radove" data-en="View Our Work">Pogledaj radove</a>
+  </div>
+
+  <div class="hero-devices">
+    <div class="device device-desktop">
+      <div class="device-screen">
+        <div class="device-bar">
+          <div class="device-dot" style="background:#ff5f57"></div>
+          <div class="device-dot" style="background:#ffbd2e"></div>
+          <div class="device-dot" style="background:#28ca41"></div>
+        </div>
+        <div class="code-lines">
+          <div class="code-line"><span style="color:#ff6584">const</span> <span style="color:#43e97b">app</span> = <span style="color:#6c63ff">Nuvio</span>();</div>
+          <div class="code-line">app.<span style="color:#43e97b">launch</span>(<span style="color:#ff6584">'web'</span>);</div>
+          <div class="code-line"><span style="color:#6c63ff">deploy</span>(<span style="color:#43e97b">performance</span>: 100);</div>
+          <div class="code-line" style="color:rgba(108,99,255,.5)">// 🚀 Site is live!</div>
+          <div class="code-line"><span style="color:#ff6584">mobile</span>.<span style="color:#43e97b">build</span>(<span style="color:#6c63ff">iOS</span>, <span style="color:#6c63ff">Android</span>);</div>
+        </div>
+      </div>
+    </div>
+    <div class="device device-phone">
+      <div class="device-screen phone-screen">
+        <div class="phone-notch"></div>
+        <div class="phone-ui-block" style="margin-top:8px"></div>
+        <div class="phone-ui-block sm"></div>
+        <div class="phone-ui-img"></div>
+        <div class="phone-ui-block" style="width:80%;height:6px;background:rgba(255,77,125,.2)"></div>
+        <div class="phone-ui-block sm" style="background:rgba(108,99,255,.2)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-sr="Skroluj" data-en="Scroll">Skroluj</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee-track">
+    <div class="marquee-item"><span class="marquee-icon">🌐</span> Web Development</div>
+    <div class="marquee-item"><span class="marquee-icon">📱</span> Mobile Apps</div>
+    <div class="marquee-item"><span class="marquee-icon">🎨</span> UI/UX Design</div>
+    <div class="marquee-item"><span class="marquee-icon">⚡</span> Performance</div>
+    <div class="marquee-item"><span class="marquee-icon">🔍</span> SEO Optimization</div>
+    <div class="marquee-item"><span class="marquee-icon">🤖</span> AI Integration</div>
+    <div class="marquee-item"><span class="marquee-icon">🛡️</span> Security</div>
+    <div class="marquee-item"><span class="marquee-icon">☁️</span> Cloud Hosting</div>
+    <div class="marquee-item"><span class="marquee-icon">🌐</span> Web Development</div>
+    <div class="marquee-item"><span class="marquee-icon">📱</span> Mobile Apps</div>
+    <div class="marquee-item"><span class="marquee-icon">🎨</span> UI/UX Design</div>
+    <div class="marquee-item"><span class="marquee-icon">⚡</span> Performance</div>
+    <div class="marquee-item"><span class="marquee-icon">🔍</span> SEO Optimization</div>
+    <div class="marquee-item"><span class="marquee-icon">🤖</span> AI Integration</div>
+    <div class="marquee-item"><span class="marquee-icon">🛡️</span> Security</div>
+    <div class="marquee-item"><span class="marquee-icon">☁️</span> Cloud Hosting</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label" data-sr="Šta radimo" data-en="What We Do">Šta radimo</div>
+  <h2 class="section-title reveal" data-sr="Usluge koje<br>nose rezultate" data-en="Services that<br>deliver results">Usluge koje<br>nose rezultate</h2>
+  <p class="section-desc reveal" data-sr="Od ideje do lansiranja, pokrivamo svaki aspekt digitalnog razvoja." data-en="From idea to launch, we cover every aspect of digital development.">Od ideje do lansiranja, pokrivamo svaki aspekt digitalnog razvoja.</p>
+  <div class="services-grid">
+    <div class="service-card reveal" onmousemove="cardGlow(event,this)">
+      <div class="service-icon web">🌐</div>
+      <h3 data-sr="Izrada Web Sajtova" data-en="Website Development">Izrada Web Sajtova</h3>
+      <p data-sr="Ručno kodirana web rešenja visokih performansi. Bez WordPress šablona: čist, optimizovan kod koji se brzo učitava i dobro rangira." data-en="Hand-coded high-performance web solutions. No WordPress templates: clean, optimized code that loads fast and ranks well.">Ručno kodirana web rešenja visokih performansi. Bez WordPress šablona: čist, optimizovan kod koji se brzo učitava i dobro rangira.</p>
+      <div class="service-tag">HTML · CSS · React · Next.js</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.1s" onmousemove="cardGlow(event,this)">
+      <div class="service-icon mobile">📱</div>
+      <h3 data-sr="Mobilne Aplikacije" data-en="Mobile Applications">Mobilne Aplikacije</h3>
+      <p data-sr="Nativne i cross-platform mobilne aplikacije za iOS i Android. Intuitivni UI, glatke animacije i vrhunske performanse na svakom uređaju." data-en="Native and cross-platform mobile apps for iOS & Android. Intuitive UI, smooth animations and top performance on every device.">Nativne i cross-platform mobilne aplikacije za iOS i Android. Intuitivni UI, glatke animacije i vrhunske performanse na svakom uređaju.</p>
+      <div class="service-tag" style="color:var(--accent3);background:rgba(0,245,160,.08);border-color:rgba(0,245,160,.2)">React Native · Flutter · Swift</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.2s" onmousemove="cardGlow(event,this)">
+      <div class="service-icon design">🎨</div>
+      <h3 data-sr="UI/UX Dizajn" data-en="UI/UX Design">UI/UX Dizajn</h3>
+      <p data-sr="Dizajn koji privlači i zadržava korisnike. Wireframe, prototip i finalni dizajn u Figma, spreman za implementaciju." data-en="Design that attracts and retains users. Wireframe, prototype and final design in Figma, ready for implementation.">Dizajn koji privlači i zadržava korisnike. Wireframe, prototip i finalni dizajn u Figma, spreman za implementaciju.</p>
+      <div class="service-tag" style="color:var(--accent2);background:rgba(255,77,125,.08);border-color:rgba(255,77,125,.2)">Figma · Prototyping · Branding</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.3s" onmousemove="cardGlow(event,this)">
+      <div class="service-icon seo">🔍</div>
+      <h3 data-sr="SEO & Performanse" data-en="SEO & Performance">SEO & Performanse</h3>
+      <p data-sr="Tehnička optimizacija koja vodi na prvu stranicu Googla. Brže učitavanje, bolji Core Web Vitals i više organskih poseta." data-en="Technical optimization that leads to the first page of Google. Faster loading, better Core Web Vitals and more organic traffic.">Tehnička optimizacija koja vodi na prvu stranicu Googla. Brže učitavanje, bolji Core Web Vitals i više organskih poseta.</p>
+      <div class="service-tag" style="color:#ffbe32;background:rgba(255,190,50,.08);border-color:rgba(255,190,50,.2)">Technical SEO · Analytics · Speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat reveal">
+    <div class="stat-num" data-count="50">0</div>
+    <div class="stat-label" data-sr="+ projekata završeno" data-en="+ projects finished">+ projekata završeno</div>
+  </div>
+  <div class="stat reveal" style="transition-delay:.1s">
+    <div class="stat-num" data-count="98">0</div>
+    <div class="stat-label" data-sr="% zadovoljnih klijenata" data-en="% happy clients">% zadovoljnih klijenata</div>
+  </div>
+  <div class="stat reveal" style="transition-delay:.2s">
+    <div class="stat-num" data-count="100">0</div>
+    <div class="stat-label" data-sr="PageSpeed score" data-en="PageSpeed score">PageSpeed score</div>
+  </div>
+  <div class="stat reveal" style="transition-delay:.3s">
+    <div class="stat-num" data-count="5">0</div>
+    <div class="stat-label" data-sr="+ godina iskustva" data-en="+ years experience">+ godina iskustva</div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label" data-sr="Kako radimo" data-en="How We Work">Kako radimo</div>
+  <h2 class="section-title reveal" data-sr="Naš proces" data-en="Our Process">Naš proces</h2>
+  <p class="section-desc reveal" data-sr="Transparentan i efikasan proces koji vodi do sjajnog finalnog proizvoda." data-en="A transparent and efficient process that leads to a great final product.">Transparentan i efikasan proces koji vodi do sjajnog finalnog proizvoda.</p>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3 data-sr="Razgovor & Analiza" data-en="Discovery & Analysis">Razgovor & Analiza</h3>
+      <p data-sr="Upoznajemo se sa vašim biznisom, ciljevima i konkurencijom. Definišemo šta i zašto gradimo." data-en="We get to know your business, goals and competition. We define what and why we're building.">Upoznajemo se sa vašim biznisom, ciljevima i konkurencijom. Definišemo šta i zašto gradimo.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.1s">
+      <div class="step-num">02</div>
+      <h3 data-sr="Dizajn & Prototip" data-en="Design & Prototype">Dizajn & Prototip</h3>
+      <p data-sr="Izrađujemo wireframe i interaktivni prototip koji možete videti i osetiti pre nego što krenemo sa kodom." data-en="We create wireframes and an interactive prototype you can see and feel before we start coding.">Izrađujemo wireframe i interaktivni prototip koji možete videti i osetiti pre nego što krenemo sa kodom.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.2s">
+      <div class="step-num">03</div>
+      <h3 data-sr="Razvoj & Kodiranje" data-en="Development & Coding">Razvoj & Kodiranje</h3>
+      <p data-sr="Ručno kodiramo svaki element. Čist kod, vrhunske performanse, bez suvišnih biblioteka." data-en="We hand-code every element. Clean code, top performance, no unnecessary libraries.">Ručno kodiramo svaki element. Čist kod, vrhunske performanse, bez suvišnih biblioteka.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.3s">
+      <div class="step-num">04</div>
+      <h3 data-sr="Testiranje & Lansiranje" data-en="Testing & Launch">Testiranje & Lansiranje</h3>
+      <p data-sr="Temeljno testiramo na svim uređajima i pregledačima, a zatim uspešno lansiramo vaš digitalni proizvod." data-en="We thoroughly test on all devices and browsers, then successfully launch your digital product.">Temeljno testiramo na svim uređajima i pregledačima, a zatim uspešno lansiramo vaš digitalni proizvod.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:.4s">
+      <div class="step-num">05</div>
+      <h3 data-sr="Podrška & Rast" data-en="Support & Growth">Podrška & Rast</h3>
+      <p data-sr="Pratimo analitiku, optimizujemo performanse i podržavamo vas i posle lansiranja." data-en="We monitor analytics, optimize performance and support you even after launch.">Pratimo analitiku, optimizujemo performanse i podržavamo vas i posle lansiranja.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label" data-sr="Naši radovi" data-en="Our Work">Naši radovi</div>
+  <h2 class="section-title reveal" data-sr="Istaknuti projekti" data-en="Featured Projects">Istaknuti projekti</h2>
+  <p class="section-desc reveal" data-sr="Svaki projekat je priča o partnerstvu, inovaciji i rezultatima." data-en="Every project is a story of partnership, innovation and results.">Svaki projekat je priča o partnerstvu, inovaciji i rezultatima.</p>
+  <div class="projects-layout">
+  <div class="phones-showcase reveal">
+
+    <!-- Phone 1: Mobile App -->
+    <div class="showcase-phone phone-one">
+      <div class="sphone-glow sphone-glow-purple"></div>
+      <div class="sphone-frame">
+        <div class="sphone-notch"></div>
+        <div class="sphone-screen app-screen">
+          <div class="app-statusbar"><span>9:41</span><span class="app-status-icons">▲▲▲ 🔋</span></div>
+          <div class="app-toprow">
+            <div class="app-avatar"></div>
+            <div class="app-toprow-text">
+              <div class="app-line app-line-sm"></div>
+              <div class="app-line app-line-md"></div>
+            </div>
+            <div class="app-bell"></div>
+          </div>
+          <div class="app-hero-card">
+            <div class="app-hc-tag"></div>
+            <div class="app-hc-title"></div>
+            <div class="app-hc-sub"></div>
+            <div class="app-hc-btn"></div>
+            <div class="app-hc-circle"></div>
+          </div>
+          <div class="app-stats">
+            <div class="app-stat"><span class="app-stat-icon">🔥</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
+            <div class="app-stat"><span class="app-stat-icon">👟</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
+            <div class="app-stat"><span class="app-stat-icon">❤️</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
+          </div>
+          <div class="app-rows">
+            <div class="app-row"></div>
+            <div class="app-row"></div>
+            <div class="app-row app-row-short"></div>
+          </div>
+        </div>
+        <div class="sphone-home-bar"></div>
+      </div>
+      <div class="sphone-label">
+        <span class="sphone-label-type" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
+        <span class="sphone-label-name" data-sr="Fitness & Zdravlje" data-en="Fitness & Health">Fitness & Zdravlje</span>
+        <a href="#contact" class="sphone-label-link" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
+      </div>
+    </div>
+
+    <!-- Phone 2: Website -->
+    <div class="showcase-phone phone-two">
+      <div class="sphone-glow sphone-glow-green"></div>
+      <div class="sphone-frame">
+        <div class="sphone-notch"></div>
+        <div class="sphone-screen web-screen">
+          <div class="web-nav-bar">
+            <div class="web-logo-pill"></div>
+            <div class="web-nav-links"><span></span><span></span><span></span></div>
+          </div>
+          <div class="web-hero-area">
+            <div class="web-badge"></div>
+            <div class="web-h1 web-h1-a"></div>
+            <div class="web-h1 web-h1-b"></div>
+            <div class="web-p web-p-a"></div>
+            <div class="web-p web-p-b"></div>
+            <div class="web-btns">
+              <div class="web-btn-primary"></div>
+              <div class="web-btn-ghost"></div>
+            </div>
+          </div>
+          <div class="web-cards-row">
+            <div class="web-card"><div class="web-card-icon"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
+            <div class="web-card"><div class="web-card-icon wci-green"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
+            <div class="web-card"><div class="web-card-icon wci-pink"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
+          </div>
+          <div class="web-img-block"></div>
+        </div>
+        <div class="sphone-home-bar"></div>
+      </div>
+      <div class="sphone-label">
+        <span class="sphone-label-type" data-sr="Web Stranica" data-en="Website">Web Stranica</span>
+        <span class="sphone-label-name" data-sr="E-Commerce Platforma" data-en="E-Commerce Platform">E-Commerce Platforma</span>
+        <a href="#contact" class="sphone-label-link" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
+      </div>
+    </div>
+
+  </div><!-- /phones-showcase -->
+
+  <!-- PROJECT LIST -->
+  <div class="plist reveal">
+
+    <div class="plist-item">
+      <div class="plist-visual pv-vet">🐾</div>
+      <div class="plist-info">
+        <span class="plist-tag plist-tag-web" data-sr="Web Stranica" data-en="Website">Web Stranica</span>
+        <h3 class="plist-name">VetCare Klinika</h3>
+        <p class="plist-desc" data-sr="Sajt za veterinarsku ordinaciju sa online zakazivanjem pregleda, galerijom ljubimaca i mapom lokacije." data-en="Vet clinic website with online appointment booking, pet gallery and location map.">Sajt za veterinarsku ordinaciju sa online zakazivanjem pregleda, galerijom ljubimaca i mapom lokacije.</p>
+        <div class="plist-stack">React · Next.js · Tailwind</div>
+        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
+      </div>
+    </div>
+
+    <div class="plist-divider"></div>
+
+    <div class="plist-item">
+      <div class="plist-visual pv-barber">✂️</div>
+      <div class="plist-info">
+        <span class="plist-tag plist-tag-app" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
+        <h3 class="plist-name">BarberShop App</h3>
+        <p class="plist-desc" data-sr="iOS & Android aplikacija za zakazivanje termina u berbernici, pregled majstora i sistem lojalnosti." data-en="iOS & Android barber booking app with stylist profiles, time slots and loyalty rewards.">iOS & Android aplikacija za zakazivanje termina u berbernici, pregled majstora i sistem lojalnosti.</p>
+        <div class="plist-stack">React Native · Firebase</div>
+        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
+      </div>
+    </div>
+
+    <div class="plist-divider"></div>
+
+    <div class="plist-item">
+      <div class="plist-visual pv-gym">💪</div>
+      <div class="plist-info">
+        <span class="plist-tag plist-tag-app" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
+        <h3 class="plist-name">IronPeak Gym</h3>
+        <p class="plist-desc" data-sr="Aplikacija za teretanu sa treninzima, praćenjem napretka, planom ishrane i pristupom članova." data-en="Gym app with workout plans, progress tracking, nutrition guide and member access control.">Aplikacija za teretanu sa treninzima, praćenjem napretka, planom ishrane i pristupom članova.</p>
+        <div class="plist-stack">Flutter · Node.js · PostgreSQL</div>
+        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
+      </div>
+    </div>
+
+  </div><!-- /plist -->
+
+  </div><!-- /projects-layout -->
+</section>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="section-label" data-sr="Tehnologije" data-en="Technologies">Tehnologije</div>
+  <h2 class="section-title reveal" data-sr="Naš tech stack" data-en="Our tech stack">Naš tech stack</h2>
+  <p class="section-desc reveal" style="margin:0 auto" data-sr="Koristimo moderne i proverene tehnologije koje garantuju kvalitet i dugoročnost." data-en="We use modern and proven technologies that guarantee quality and longevity.">Koristimo moderne i proverene tehnologije koje garantuju kvalitet i dugoročnost.</p>
+  <div class="tech-grid reveal">
+    <div class="tech-pill"><span>⚛️</span> React</div>
+    <div class="tech-pill"><span>▲</span> Next.js</div>
+    <div class="tech-pill"><span>📱</span> React Native</div>
+    <div class="tech-pill"><span>🐦</span> Flutter</div>
+    <div class="tech-pill"><span>🍎</span> Swift</div>
+    <div class="tech-pill"><span>🤖</span> Kotlin</div>
+    <div class="tech-pill"><span>🟦</span> TypeScript</div>
+    <div class="tech-pill"><span>🟩</span> Node.js</div>
+    <div class="tech-pill"><span>🐍</span> Python</div>
+    <div class="tech-pill"><span>🔥</span> Firebase</div>
+    <div class="tech-pill"><span>☁️</span> AWS</div>
+    <div class="tech-pill"><span>🐋</span> Docker</div>
+    <div class="tech-pill"><span>🗄️</span> PostgreSQL</div>
+    <div class="tech-pill"><span>🌿</span> MongoDB</div>
+    <div class="tech-pill"><span>🎨</span> Figma</div>
+    <div class="tech-pill"><span>🔍</span> SEO Tools</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label" data-sr="Česta pitanja" data-en="FAQ">Česta pitanja</div>
+  <h2 class="section-title reveal" data-sr="Imate pitanja?" data-en="Have questions?">Imate pitanja?</h2>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">
+        <span data-sr="Koliko košta izrada web sajta?" data-en="How much does a website cost?">Koliko košta izrada web sajta?</span>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-a" data-sr="Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 400€, dok kompleksne web aplikacije mogu biti i 2000€+. Nakon razgovora dajemo besplatnu procenu." data-en="The price depends on the complexity of the project. Simpler informational sites start from €400, while complex web apps can be €2000+. After a conversation we provide a free estimate.">Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 400€, dok kompleksne web aplikacije mogu biti i 2000€+. Nakon razgovora dajemo besplatnu procenu.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">
+        <span data-sr="Koliko traje izrada web sajta?" data-en="How long does website development take?">Koliko traje izrada web sajta?</span>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-a" data-sr="Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta." data-en="An average website takes 1-2 weeks. Mobile apps usually 3-6 weeks. Complex platforms longer. We always define realistic deadlines at the start of the project.">Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">
+        <span data-sr="Da li pružate podršku nakon lansiranja?" data-en="Do you provide support after launch?">Da li pružate podršku nakon lansiranja?</span>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-a" data-sr="Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu." data-en="Yes! We provide monthly support, updates and monitoring. You can choose a support package that suits your needs and budget.">Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">
+        <span data-sr="Da li mogu da vidim sajt pre lansiranja?" data-en="Can I see the site before launch?">Da li mogu da vidim sajt pre lansiranja?</span>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-a" data-sr="Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja." data-en="Of course! Every project goes through review phases. We first present the design, then the prototype, then the developed version, all before the final launch.">Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">
+        <span data-sr="Radite li mobilne aplikacije za oba sistema?" data-en="Do you build apps for both platforms?">Radite li mobilne aplikacije za oba sistema?</span>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-a" data-sr="Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat." data-en="Yes! We build native iOS and Android apps, as well as cross-platform solutions (React Native, Flutter) when that's the optimal choice for your project.">Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" data-sr="Kontakt" data-en="Contact">Kontakt</div>
+    <h2 class="section-title reveal" data-sr="Pokrenimo nešto<br>zajedno" data-en="Let's build something<br>together">Pokrenimo nešto<br>zajedno</h2>
+    <p class="section-desc reveal" style="margin:0 auto" data-sr="Imate ideju? Javite nam se i u roku od 24 sata dajemo vam besplatnu procenu." data-en="Have an idea? Contact us and within 24 hours we'll give you a free estimate.">Imate ideju? Javite nam se i u roku od 24 sata dajemo vam besplatnu procenu.</p>
+    <div class="contact-card reveal">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="1f98ac3e-6f6f-40bd-9c88-6c8170db8228">
+        <input type="hidden" name="subject" value="Nova poruka sa Nuvio Development sajta">
+        <input type="hidden" name="from_name" value="Nuvio Development Website">
+        <div class="form-row">
+          <div class="form-field">
+            <label data-sr="Ime" data-en="Name">Ime</label>
+            <input type="text" name="name" placeholder="Marko Marković" required>
+          </div>
+          <div class="form-field">
+            <label data-sr="Email" data-en="Email">Email</label>
+            <input type="email" name="email" placeholder="marko@firma.rs" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label data-sr="Tip projekta" data-en="Project type">Tip projekta</label>
+          <select name="project_type">
+            <option data-sr="Web sajt" data-en="Website">Web sajt</option>
+            <option data-sr="Mobilna aplikacija" data-en="Mobile application">Mobilna aplikacija</option>
+            <option data-sr="Web sajt + Mobilna aplikacija" data-en="Website + Mobile application">Web sajt + Mobilna aplikacija</option>
+            <option data-sr="Dizajn" data-en="Design">Dizajn</option>
+            <option data-sr="Nešto drugo" data-en="Something else">Nešto drugo</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label data-sr="Poruka" data-en="Message">Poruka</label>
+          <textarea name="message" placeholder="Opišite vaš projekat..." data-en-placeholder="Describe your project..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">
+          <span data-sr="Pošalji poruku →" data-en="Send Message →">Pošalji poruku →</span>
+        </button>
+      </form>
+    </div>
+    <div class="contact-links">
+      <a href="tel:+381656382930" class="contact-link">
+        <div class="contact-link-icon">📞</div>
+        <span>+381 65 638 2930</span>
+      </a>
+      <a href="mailto:nuvio.devgroup@gmail.com" class="contact-link">
+        <div class="contact-link-icon">✉️</div>
+        <span>nuvio.devgroup@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Nuvio<span>Development</span></div>
+    <div class="footer-copy" data-sr="© 2025 Nuvio Development. Sva prava zadržana." data-en="© 2025 Nuvio Development. All rights reserved.">© 2025 Nuvio Development. Sva prava zadržana.</div>
+    <div class="footer-links">
+      <a href="#" data-sr="Privatnost" data-en="Privacy">Privatnost</a>
+      <a href="#" data-sr="Uslovi" data-en="Terms">Uslovi</a>
+      <a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
