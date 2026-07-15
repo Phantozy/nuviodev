@@ -138,6 +138,9 @@
     transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease, filter .35s ease, box-shadow .35s ease;
     transform-origin:center;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select:none;
+    -webkit-user-select:none;
   }
   .reel-card:focus-visible{outline-offset:4px;}
 
@@ -400,7 +403,7 @@
         <div class="reel-card reel-left" data-name="Dvorište" tabindex="0" aria-label="Reel: Dvorište">
           <video class="reel-media" src="video2.mp4" autoplay muted loop playsinline></video>
           <div class="reel-scrim"></div>
-          <div class="reel-label">Bazen</div>
+          <div class="reel-label">Dvorište</div>
           <div class="reel-icon icon-mute" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
           </div>
@@ -412,7 +415,7 @@
         <div class="reel-card reel-right" data-name="Fasada" tabindex="0" aria-label="Reel: Fasada">
           <video class="reel-media" src="video3.mp4" autoplay muted loop playsinline></video>
           <div class="reel-scrim"></div>
-          <div class="reel-label">Izolacija</div>
+          <div class="reel-label">Fasada</div>
           <div class="reel-icon icon-mute" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
           </div>
@@ -563,7 +566,7 @@
   <footer>
     <div class="wrap">
       <div class="footer-inner">
-        <p>© 2026 Darko Kojić — Građevinac & kreator sadržaja.</p>
+        <p>© 2026 Darko Koja Kojić — Građevinac & kreator sadržaja.</p>
         <div class="socials">
           <a href="https://www.instagram.com/darkokoja/">Instagram</a>
           <a href="https://www.youtube.com/@DarkoKojaKojic">YouTube</a>
@@ -574,16 +577,24 @@
   </footer>
 
 <script>
+(function () {
   const stack = document.getElementById('reelStack');
-  const cards = stack.querySelectorAll('.reel-card');
-  let activeCard = null;
+  const cards = Array.from(stack.querySelectorAll('.reel-card'));
+
+  const HOLD_THRESHOLD = 280;   // ms - preko ovoga se smatra "drži prst" (hold)
+  const MOVE_CANCEL_PX = 12;    // ako prst pobegne dalje od ovoga, gest se otkazuje (skrol)
+
+  let activeCard = null;      // koja kartica je trenutno vizuelno aktivna (uvećana + zvuk)
+  let toggledCard = null;     // kartica koja je "zaključana" aktivna klikom/tapom (dok se ponovo ne tapne)
 
   function activateCard(card) {
     stack.classList.add('is-hovering');
     cards.forEach(c => {
-      c.classList.remove('is-active');
-      const v = c.querySelector('video.reel-media');
-      if (v) v.muted = true;
+      if (c !== card) {
+        c.classList.remove('is-active');
+        const v = c.querySelector('video.reel-media');
+        if (v) v.muted = true;
+      }
     });
     card.classList.add('is-active');
     const video = card.querySelector('video.reel-media');
@@ -595,42 +606,122 @@
   }
 
   function deactivateCard(card) {
-    stack.classList.remove('is-hovering');
     card.classList.remove('is-active');
     const video = card.querySelector('video.reel-media');
     if (video) video.muted = true;
     if (activeCard === card) activeCard = null;
+    if (!activeCard) stack.classList.remove('is-hovering');
   }
 
-  cards.forEach(card => {
-    // Desktop hover
-    card.addEventListener('mouseenter', () => activateCard(card));
-    card.addEventListener('mouseleave', () => deactivateCard(card));
-    card.addEventListener('focus', () => activateCard(card));
-    card.addEventListener('blur', () => deactivateCard(card));
+  function deactivateAll() {
+    cards.forEach(deactivateCard);
+    toggledCard = null;
+  }
 
-    // Tap (mobile + desktop click): tap once to activate, tap again to stop
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (activeCard === card) {
+  /* ---------- MIŠ / DESKTOP (hover) ---------- */
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+      if (e.pointerType === 'touch') return;
+      activateCard(card);
+    });
+    card.addEventListener('mouseleave', (e) => {
+      if (e.pointerType === 'touch') return;
+      deactivateCard(card);
+      if (toggledCard === card) toggledCard = null;
+    });
+  });
+
+  /* ---------- DODIR / MOBILNI (tap = toggle, drži = hold) ---------- */
+  cards.forEach(card => {
+    let startX = 0, startY = 0, startTime = 0;
+    let wasToggled = false;
+    let moved = false;
+    let touchActive = false;
+
+    card.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+      touchActive = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      startTime = Date.now();
+      wasToggled = (toggledCard === card);
+      // odmah, glatko, podigni video (bez čekanja na drugi tap)
+      activateCard(card);
+    }, { passive: true });
+
+    card.addEventListener('pointermove', (e) => {
+      if (!touchActive) return;
+      if (Math.abs(e.clientX - startX) > MOVE_CANCEL_PX || Math.abs(e.clientY - startY) > MOVE_CANCEL_PX) {
+        moved = true;
+      }
+    }, { passive: true });
+
+    function endTouch(e) {
+      if (!touchActive) return;
+      touchActive = false;
+      const duration = Date.now() - startTime;
+
+      if (moved) {
+        // korisnik je skrolovao/prevukao preko kartice - otkaži gest
         deactivateCard(card);
+        if (toggledCard === card) toggledCard = null;
+        return;
+      }
+
+      if (duration >= HOLD_THRESHOLD) {
+        // DRŽANJE: kad pusti prst, smanji i ugasi zvuk
+        deactivateCard(card);
+        toggledCard = null;
+      } else {
+        // TAP: klik pali/gasi trajno (dok se ponovo ne tapne)
+        if (wasToggled) {
+          deactivateCard(card);
+          toggledCard = null;
+        } else {
+          // već je aktivirano na pointerdown - samo ostaje upaljeno
+          toggledCard = card;
+        }
+      }
+    }
+
+    card.addEventListener('pointerup', endTouch, { passive: true });
+    card.addEventListener('pointercancel', () => {
+      if (!touchActive) return;
+      touchActive = false;
+      deactivateCard(card);
+      toggledCard = null;
+    }, { passive: true });
+
+    /* Tastatura: Enter / Space ponaša se kao tap-toggle */
+    card.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      if (toggledCard === card) {
+        deactivateCard(card);
+        toggledCard = null;
       } else {
         activateCard(card);
+        toggledCard = card;
       }
     });
   });
 
-  // Tap anywhere outside the stack stops the active video
-  document.addEventListener('click', (e) => {
-    if (activeCard && !stack.contains(e.target)) {
-      deactivateCard(activeCard);
+  /* Tap/klik van stacka gasi trenutno aktivnu karticu */
+  document.addEventListener('pointerdown', (e) => {
+    if (!stack.contains(e.target) && (activeCard || toggledCard)) {
+      deactivateAll();
     }
   });
 
-  document.querySelectorAll('video.reel-media').forEach(v => {
-    v.muted = true;
-    v.play().catch(() => {});
+  cards.forEach(card => {
+    const v = card.querySelector('video.reel-media');
+    if (v) {
+      v.muted = true;
+      v.play().catch(() => {});
+    }
   });
+})();
 </script>
 
 </body>
