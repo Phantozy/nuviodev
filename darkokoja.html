@@ -2,7 +2,7 @@
 <html lang="sr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Darko Koja — Građevinac & kreator</title>
 <meta name="description" content="Darko Koja (@darkokoja) — gradim kuće od livade do krova i delim ceo proces.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,11 @@
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  html, body{
+    max-width:100%;
+    overflow-x:hidden;
+    touch-action: pan-y;
+  }
   body{
     margin:0;
     background:var(--white);
@@ -103,7 +108,7 @@
   }
 
   /* Hero */
-  .hero{padding:64px 0 88px;}
+  .hero{padding:64px 0 88px; overflow:hidden;}
   .hero-grid{
     display:grid;
     grid-template-columns:minmax(300px,440px) 1fr;
@@ -132,6 +137,7 @@
     cursor:pointer;
     transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease, filter .35s ease, box-shadow .35s ease;
     transform-origin:center;
+    -webkit-tap-highlight-color: transparent;
   }
   .reel-card:focus-visible{outline-offset:4px;}
 
@@ -246,11 +252,16 @@
     background:var(--concrete);
     overflow:hidden;
     padding:14px 0;
+    width:100%;
   }
   .marquee-track{
-    display:flex; width:max-content;
+    display:flex;
+    width:max-content;
     animation:scroll 26s linear infinite;
     gap:0;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   @media (prefers-reduced-motion:reduce){
     .marquee-track{animation:none;}
@@ -565,33 +576,55 @@
 <script>
   const stack = document.getElementById('reelStack');
   const cards = stack.querySelectorAll('.reel-card');
+  let activeCard = null;
+
+  function activateCard(card) {
+    stack.classList.add('is-hovering');
+    cards.forEach(c => {
+      c.classList.remove('is-active');
+      const v = c.querySelector('video.reel-media');
+      if (v) v.muted = true;
+    });
+    card.classList.add('is-active');
+    const video = card.querySelector('video.reel-media');
+    if (video) {
+      video.muted = false;
+      video.play().catch(() => {});
+    }
+    activeCard = card;
+  }
+
+  function deactivateCard(card) {
+    stack.classList.remove('is-hovering');
+    card.classList.remove('is-active');
+    const video = card.querySelector('video.reel-media');
+    if (video) video.muted = true;
+    if (activeCard === card) activeCard = null;
+  }
 
   cards.forEach(card => {
-    const video = card.querySelector('video.reel-media');
+    // Desktop hover
+    card.addEventListener('mouseenter', () => activateCard(card));
+    card.addEventListener('mouseleave', () => deactivateCard(card));
+    card.addEventListener('focus', () => activateCard(card));
+    card.addEventListener('blur', () => deactivateCard(card));
 
-    const activate = () => {
-      stack.classList.add('is-hovering');
-      cards.forEach(c => {
-        c.classList.remove('is-active');
-        const v = c.querySelector('video.reel-media');
-        if (v) v.muted = true;
-      });
-      card.classList.add('is-active');
-      if (video) {
-        video.muted = false;
-        video.play().catch(() => {});
+    // Tap (mobile + desktop click): tap once to activate, tap again to stop
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (activeCard === card) {
+        deactivateCard(card);
+      } else {
+        activateCard(card);
       }
-    };
-    const deactivate = () => {
-      stack.classList.remove('is-hovering');
-      card.classList.remove('is-active');
-      if (video) video.muted = true;
-    };
-    card.addEventListener('mouseenter', activate);
-    card.addEventListener('mouseleave', deactivate);
-    card.addEventListener('focus', activate);
-    card.addEventListener('blur', deactivate);
-    card.addEventListener('touchstart', activate, {passive:true});
+    });
+  });
+
+  // Tap anywhere outside the stack stops the active video
+  document.addEventListener('click', (e) => {
+    if (activeCard && !stack.contains(e.target)) {
+      deactivateCard(activeCard);
+    }
   });
 
   document.querySelectorAll('video.reel-media').forEach(v => {
