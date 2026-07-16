@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MCH Mafija</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deepest:#200705;
+    --maroon-900:#3c0e0b;
+    --maroon-800:#5a130f;
+    --maroon-700:#761411;
+    --maroon-600:#8f2019;
+    --maroon-500:#a52a20;
+    --solid-red:#b3140f;
+    --gold:#f5b342;
+    --gold-light:#ffd88a;
+    --gold-dim:#c9902f;
+    --felt:#1f6f4a;
+    --felt-light:#2f9463;
+    --cream:#f6ead2;
+    --ink:#200705;
+    --shadow-deep: 0 30px 60px rgba(0,0,0,.55);
+    --radius-lg:26px;
+    --radius-md:16px;
+    --radius-sm:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 12px;
+    font-family:'Roboto',sans-serif;
+    background:#ffffff;
+    color:var(--cream);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Phone frame ---------- */
+  .phone{
+    position:relative;
+    width:390px;
+    max-width:100%;
+    height:844px;
+    max-height:94vh;
+    background:var(--solid-red);
+    border-radius:44px;
+    border:2px solid #6a1a15;
+    box-shadow:var(--shadow-deep), inset 0 0 0 8px #140403;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .screen{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    opacity:0; visibility:hidden;
+    transform:translateY(14px);
+    transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
+    z-index:1;
+  }
+  .screen.active{
+    opacity:1; visibility:visible; transform:translateY(0);
+    transition:opacity .35s ease, transform .35s ease;
+    z-index:2;
+  }
+
+  /* Welcome */
+  #screen-welcome{
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px 34px;
+    gap:0;
+  }
+  .logo-frame{
+    width:132px; height:132px;
+    border-radius:22px;
+    padding:6px;
+    background: black;
+    box-shadow:0 18px 34px rgba(0,0,0,.45);
+    margin-bottom:26px;
+    position:relative;
+  }
+  .logo-frame img{
+    width:100%; height:100%;
+    border-radius:16px;
+    display:block;
+    object-fit:cover;
+  }
+  .brand-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    letter-spacing:3px;
+    font-size:30px;
+    color:var(--gold-light);
+    margin:0 0 6px;
+    text-shadow:0 3px 10px rgba(0,0,0,.4);
+  }
+  .brand-sub{
+    font-family:'Montserrat',sans-serif;
+    font-size:12px;
+    letter-spacing:5px;
+    color:var(--gold-dim);
+    margin:0 0 18px;
+    text-transform:uppercase;
+  }
+  .tagline{
+    font-size:14.5px;
+    line-height:1.55;
+    color:#ecd9c3;
+    max-width:270px;
+    margin:0 0 38px;
+  }
+  .welcome-actions{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  /* Dugmad */
+  .btn{
+    border:none;
+    cursor:pointer;
+    font-family:'Roboto',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:15px 20px;
+    border-radius:14px;
+    transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    width:100%;
+  }
+  .btn:active{ transform:scale(.97); }
+  .btn-primary{
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    color:#3a1200;
+    box-shadow:0 10px 22px rgba(245,179,66,.28);
+  }
+  .btn-primary:hover{ filter:brightness(1.05); }
+  .btn-outline{
+    background:transparent;
+    color:var(--gold-light);
+    border:1.5px solid var(--gold-dim);
+  }
+  .btn-outline:hover{ background:rgba(245,179,66,.08); }
+  .btn-felt{
+    background:linear-gradient(180deg, var(--felt-light), var(--felt));
+    color:#eafff2;
+    box-shadow:0 10px 20px rgba(31,111,74,.35);
+  }
+  .btn-small{ width:auto; padding:10px 16px; font-size:13px; border-radius:11px; }
+  .footnote{
+    margin-top:22px;
+    font-size:11.5px;
+    color:#a8846a;
+    letter-spacing:.5px;
+  }
+
+  /* Auth */
+  #screen-auth{
+    padding:0;
+    align-items:stretch;
+    justify-content:flex-start;
+    overflow-y:auto;
+  }
+  .auth-top{
+    display:flex; align-items:center; gap:14px;
+    padding:18px 22px 0;
+    flex:none;
+  }
+  .icon-btn{
+    width:38px; height:38px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.28);
+    background:rgba(0,0,0,.16);
+    color:var(--gold-light);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    flex:none;
+  }
+  .auth-brand{
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center;
+    padding:14px 26px 4px;
+  }
+  .auth-brand .logo-frame{
+    width:64px; height:64px;
+    border-radius:16px;
+    padding:4px;
+    margin-bottom:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+  }
+  .auth-heading{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    color:var(--gold-light);
+    letter-spacing:.6px;
+    margin-bottom:4px;
+  }
+  .auth-subheading{
+    font-size:12.5px;
+    color:rgba(246,234,210,.75);
+    line-height:1.5;
+    max-width:230px;
+  }
+  .auth-card{
+    background:var(--cream);
+    border-radius:28px 28px 0 0;
+    margin-top:18px;
+    padding:26px 24px 28px;
+    flex:1;
+    box-shadow:0 -14px 34px rgba(0,0,0,.22);
+  }
+  .segmented{
+    display:flex;
+    background:rgba(60,14,11,.08);
+    border-radius:14px;
+    padding:5px;
+    margin-bottom:22px;
+  }
+  .segmented button{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:#8a5a44;
+    font-family:'Roboto',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    padding:10px 0;
+    border-radius:10px;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .segmented button.active{
+    background:var(--solid-red);
+    color:#fff5ea;
+    box-shadow:0 6px 14px rgba(179,20,15,.3);
+  }
+  .field{
+    margin-bottom:15px;
+  }
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:#7a4a37;
+    margin-bottom:7px;
+    letter-spacing:.3px;
+  }
+  .field input{
+    width:100%;
+    background:#fffdf8;
+    border:1.5px solid rgba(60,14,11,.14);
+    color:var(--ink);
+    border-radius:12px;
+    padding:13px 14px;
+    font-family:'Roboto',sans-serif;
+    font-size:14px;
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .field input:focus{
+    border-color:var(--solid-red);
+    box-shadow:0 0 0 3px rgba(179,20,15,.12);
+  }
+  .field input::placeholder{ color:#b89a86; }
+  .auth-form{ display:flex; flex-direction:column; }
+  .form-hint{
+    text-align:center;
+    font-size:12px;
+    color:#9a7862;
+    margin:16px 0 2px;
+    line-height:1.5;
+  }
+  .auth-extra{ display:none; }
+  .auth-extra.show{ display:block; }
+
+  /* Shell */
+  #screen-app{ padding:0; }
+  .app-topbar{
+    display:flex; align-items:center; gap:12px;
+    padding:18px 20px 14px;
+    background:linear-gradient(180deg, rgba(0,0,0,.18), transparent);
+    flex:none;
+  }
+  .app-topbar .mini-logo{
+    width:75px; height:60px; border-radius:10px;
+    padding:3px;
+  }
+
+  .app-topbar .mini-logo img{ width:100%; height:100%; border-radius:7px; object-fit:cover; display:block; }
+  .app-topbar .greet{ flex:1; }
+  .app-topbar .greet .hello{ font-size:11px; color:#c79a76; letter-spacing:.5px; }
+  .app-topbar .greet .name{ font-family:'Montserrat',sans-serif; font-size:15px; color:var(--gold-light); letter-spacing:.5px; }
+  .avatar-chip{
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(160deg, var(--felt-light), var(--felt));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Montserrat',sans-serif; font-weight:700; font-size:13px; color:#eafff2;
+    cursor:pointer;
+    border:2px solid rgba(245,179,66,.4);
+    flex:none;
+  }
+
+  .app-content{
+    flex:1;
+    overflow-y:auto;
+    padding:6px 20px 100px;
+  }
+  .panel{ display:none; animation:fadeIn .3s ease; }
+  .panel.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .section-title{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gold-dim);
+    margin:20px 0 10px;
+  }
+  .section-title:first-child{ margin-top:6px; }
+
+  /* Igraj panel */
+  .hero-card{
+    background:linear-gradient(150deg, var(--maroon-600), var(--maroon-800));
+    border:1px solid rgba(245,179,66,.25);
+    border-radius:var(--radius-lg);
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 14px 30px rgba(0,0,0,.35);
+  }
+  .hero-card::after{
+    content:"♠";
+    position:absolute; right:-6px; bottom:-22px;
+    font-size:110px;
+    color:rgba(245,179,66,.08);
+    line-height:1;
+  }
+  .hero-card h3{
+    font-family:'Montserrat',sans-serif;
+    color:var(--gold-light);
+    font-size:19px;
+    margin:0 0 6px;
+    letter-spacing:.5px;
+  }
+  .hero-card p{
+    font-size:13px; color:#e9d3b8; margin:0 0 4px; line-height:1.5; max-width:92%; position:relative; z-index:1;
+  }
+  .join-row{
+    display:flex; gap:8px; margin-top:14px; position:relative; z-index:1;
+  }
+  .join-row input{
+    flex:1;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(245,179,66,.25);
+    color:var(--cream);
+    border-radius:12px;
+    padding:12px 13px;
+    font-size:13.5px;
+    outline:none;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .join-row input::placeholder{ color:#a37f61; text-transform:none; letter-spacing:0; }
+
+  .room-card, .history-row{
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.12);
+    border-radius:var(--radius-md);
+    padding:14px 15px;
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:10px;
+  }
+  .room-card .room-icon, .history-row .hist-icon{
+    width:40px; height:40px; border-radius:11px;
+    background:rgba(245,179,66,.12);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold-light);
+    flex:none;
+  }
+  .room-icon svg, .hist-icon svg{ width:19px; height:19px; }
+  .room-card .room-info{ flex:1; min-width:0; }
+  .room-card .room-info .rname{ font-weight:600; font-size:14px; color:var(--cream); }
+  .room-card .room-info .rmeta{ font-size:11.5px; color:#b58f6e; margin-top:2px; }
+  .chip{
+    font-size:10.5px; font-weight:600; padding:5px 10px; border-radius:20px;
+    white-space:nowrap;
+  }
+  .chip-open{ background:rgba(47,148,99,.18); color:#7be0ac; }
+  .chip-full{ background:rgba(165,42,32,.25); color:#f0a294; }
+
+  .history-row .hist-info{ flex:1; }
+  .history-row .hist-info .hname{ font-size:13.5px; font-weight:600; color:var(--cream); }
+  .history-row .hist-info .hrole{ font-size:11px; color:#b58f6e; margin-top:2px;}
+  .badge-win{ background:rgba(47,148,99,.2); color:#7be0ac; }
+  .badge-loss{ background:rgba(165,42,32,.28); color:#f0a294; }
+
+  /* Odaberi karte */
+  .mode-grid{ display:flex; flex-direction:column; gap:10px; margin-top:14px; position:relative; z-index:1; }
+  .mode-card{
+    display:flex; align-items:center; gap:14px;
+    background:rgba(0,0,0,.24);
+    border:1px solid rgba(245,179,66,.22);
+    border-radius:var(--radius-md);
+    padding:14px 15px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .mode-card:active{ transform:scale(.98); }
+  .mode-card:hover{ background:rgba(0,0,0,.34); border-color:rgba(245,179,66,.42); }
+  .mode-card .mc-icon{
+    width:44px; height:44px; border-radius:12px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(245,179,66,.14); color:var(--gold-light);
+  }
+  .mode-card .mc-icon svg{ width:21px; height:21px; }
+  .mode-card .mc-body{ flex:1; min-width:0; }
+  .mode-card .mc-title{ font-family:'Montserrat',sans-serif; font-size:14.5px; color:var(--cream); letter-spacing:.3px; }
+  .mode-card .mc-sub{ font-size:11.5px; color:#b58f6e; margin-top:2px; line-height:1.4; }
+  .mode-card .mc-chev{ color:#a37f61; font-size:19px; flex:none; }
+
+  /* Uloge panel */
+  .roles-toolbar{ display:flex; gap:8px; align-items:center; margin-bottom:14px; }
+  .search-wrap{ position:relative; flex:1; }
+  .search-wrap svg{ position:absolute; left:13px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:#a37f61; }
+  .search-wrap input{
+    width:100%;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.22);
+    color:var(--cream);
+    border-radius:14px;
+    padding:12px 14px 12px 38px;
+    font-size:13.5px;
+    outline:none;
+    font-family:'Roboto',sans-serif;
+  }
+  .search-wrap input:focus{ border-color:var(--gold); }
+  .search-wrap input::placeholder{ color:#a37f61; }
+  .new-role-btn{
+    flex:none;
+    display:flex; align-items:center; justify-content:center;
+    width:44px; height:44px;
+    border-radius:14px;
+    border:1px solid rgba(245,179,66,.3);
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    color:#3a1200;
+    cursor:pointer;
+  }
+  .new-role-btn:active{ transform:scale(.94); }
+  .new-role-btn svg{ width:19px; height:19px; }
+  .roles-empty{ text-align:center; font-size:12.5px; color:#8a6852; padding:34px 0; }
+
+  .role-card{
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.14);
+    border-radius:var(--radius-md);
+    padding:15px;
+    display:flex; gap:13px;
+    margin-bottom:11px;
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .role-card:hover{ background:rgba(0,0,0,.3); }
+  .role-card:active{ transform:scale(.985); }
+  .role-card .r-icon{
+    width:46px; height:46px; border-radius:13px;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .r-icon svg{ width:22px; height:22px; }
+  .role-card.team-mafija .r-icon{ background:rgba(165,42,32,.28); color:#f0a294; }
+  .role-card.team-grad .r-icon{ background:rgba(47,148,99,.2); color:#7be0ac; }
+  .role-card.team-neutral .r-icon{ background:rgba(201,144,47,.22); color:var(--gold-light); }
+  .role-card .r-body{ flex:1; min-width:0; }
+  .role-card .r-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:4px; }
+  .role-card .r-name{ font-family:'Montserrat',sans-serif; font-size:14.5px; color:var(--cream); letter-spacing:.3px; }
+  .role-card .r-team{ font-size:9.5px; font-weight:700; padding:3px 9px; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+  .role-card.team-mafija .r-team{ background:rgba(165,42,32,.3); color:#f0a294; }
+  .role-card.team-grad .r-team{ background:rgba(47,148,99,.22); color:#7be0ac; }
+  .role-card.team-neutral .r-team{ background:rgba(201,144,47,.25); color:var(--gold-light); }
+  .role-card .r-desc{
+    font-size:12.5px; color:#c7a781; line-height:1.5;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .role-card .r-edit-hint{ font-size:10.5px; color:var(--gold-dim); margin-top:6px; letter-spacing:.3px; }
+
+  /* Profil panel */
+  .profile-head{
+    display:flex; flex-direction:column; align-items:center;
+    padding:16px 0 22px;
+    text-align:center;
+  }
+  .profile-avatar{
+    width:84px; height:84px; border-radius:50%;
+    background:linear-gradient(160deg, var(--felt-light), var(--felt));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Montserrat',sans-serif; font-weight:700; font-size:28px; color:#eafff2;
+    border:3px solid rgba(245,179,66,.45);
+    margin-bottom:12px;
+  }
+  .profile-head .pname{ font-family:'Montserrat',sans-serif; font-size:19px; color:var(--gold-light); letter-spacing:.5px; }
+  .profile-head .prole{ font-size:12px; color:#b58f6e; margin-top:4px; }
+  .stats-row{ display:flex; gap:10px; margin-bottom:22px; }
+  .stat-card{
+    flex:1;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.14);
+    border-radius:var(--radius-md);
+    padding:14px 8px;
+    text-align:center;
+  }
+  .stat-card .sval{ font-family:'Montserrat',sans-serif; font-size:20px; color:var(--gold-light); }
+  .stat-card .slabel{ font-size:10px; color:#b58f6e; margin-top:4px; letter-spacing:.3px; }
+  .settings-list{
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(245,179,66,.12);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+  }
+  .settings-item{
+    display:flex; align-items:center; gap:12px;
+    padding:14px 16px;
+    font-size:13.5px; color:var(--cream);
+    cursor:pointer;
+    border-bottom:1px solid rgba(245,179,66,.08);
+  }
+  .settings-item:last-child{ border-bottom:none; }
+  .settings-item .s-ic{ width:20px; display:flex; align-items:center; justify-content:center; opacity:.85; }
+  .s-ic svg{ width:18px; height:18px; }
+  .settings-item .s-label{ flex:1; }
+  .settings-item .s-chev{ color:#a37f61; }
+  .settings-item.danger{ color:#f0a294; }
+
+  /* Footer */
+  .bottom-nav{
+    position:absolute; left:0; right:0; bottom:0;
+    display:flex;
+    background:rgba(28,7,5,.92);
+    backdrop-filter:blur(6px);
+    border-top:1px solid rgba(245,179,66,.18);
+    padding:10px 14px 16px;
+    gap:6px;
+    z-index:3;
+  }
+  .nav-btn{
+    flex:1;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    background:none; border:none; cursor:pointer;
+    padding:8px 4px 6px;
+    border-radius:14px;
+    color:#a3805f;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-btn svg{ width:22px; height:22px; }
+  .nav-btn span{ font-size:10.5px; font-weight:600; letter-spacing:.3px; }
+  .nav-btn.active{ color:var(--gold-light); background:rgba(245,179,66,.1); }
+
+  /* Lokalna */
+  .step-top{
+    display:flex; align-items:center; gap:14px;
+    padding:18px 20px 6px;
+    flex:none;
+  }
+  .step-title{
+    font-family:'Montserrat',sans-serif; font-size:18px; color:var(--gold-light); letter-spacing:.5px;
+  }
+  .step-body{ flex:1; overflow-y:auto; padding:6px 20px 26px; }
+  .step-label{
+    font-family:'Montserrat',sans-serif; font-size:12px; letter-spacing:1.3px; text-transform:uppercase;
+    color:var(--gold-dim); margin:18px 0 10px;
+  }
+  .step-label:first-child{ margin-top:4px; }
+  .step-hint{ font-size:12px; color:#b58f6e; margin:-4px 0 12px; line-height:1.5; }
+  .step-cta{ padding:14px 20px 22px; flex:none; }
+
+  .add-row{ display:flex; gap:8px; }
+  .add-row input{
+    flex:1;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.22);
+    color:var(--cream);
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:14px;
+    outline:none;
+    font-family:'Roboto',sans-serif;
+  }
+  .add-row input:focus{ border-color:var(--gold); }
+
+  .chip-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .player-chip{
+    display:flex; align-items:center; gap:7px;
+    background:rgba(245,179,66,.1);
+    border:1px solid rgba(245,179,66,.3);
+    color:var(--gold-light);
+    font-size:12.5px; font-weight:600;
+    padding:7px 8px 7px 13px;
+    border-radius:20px;
+  }
+  .player-chip button{
+    border:none; background:rgba(0,0,0,.28); color:#f0a294;
+    width:18px; height:18px; border-radius:50%;
+    font-size:11px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .player-count{ font-size:11.5px; color:#b58f6e; margin-top:10px; }
+  .player-count.warn{ color:#f0a294; }
+
+  .role-check-list{ display:flex; flex-direction:column; gap:8px; }
+  .role-check-row{
+    display:flex; align-items:center; gap:11px;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(245,179,66,.12);
+    border-radius:12px;
+    padding:11px 13px;
+    cursor:pointer;
+  }
+  .role-check-row input{ width:17px; height:17px; accent-color:var(--gold); flex:none; }
+  .role-check-row .rc-name{ flex:1; font-size:13.5px; color:var(--cream); }
+  .rc-team{ font-size:9.5px; font-weight:700; padding:3px 9px; border-radius:20px; text-transform:uppercase; letter-spacing:.4px; white-space:nowrap; }
+  .rc-team.team-mafija{ background:rgba(165,42,32,.3); color:#f0a294; }
+  .rc-team.team-grad{ background:rgba(47,148,99,.22); color:#7be0ac; }
+  .rc-team.team-neutral{ background:rgba(201,144,47,.25); color:var(--gold-light); }
+
+  /* Otkrivanje uloga */
+  .reveal-wrap{ display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:8px; }
+  .reveal-progress{ font-size:11.5px; color:#b58f6e; letter-spacing:.6px; margin-bottom:16px; }
+  .reveal-card{
+    width:100%; max-width:280px;
+    background:linear-gradient(150deg, var(--maroon-600), var(--maroon-800));
+    border:1px solid rgba(245,179,66,.3);
+    border-radius:22px;
+    padding:34px 22px;
+    box-shadow:0 16px 30px rgba(0,0,0,.4);
+    min-height:220px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px;
+  }
+  .reveal-player-name{ font-family:'Montserrat',sans-serif; font-size:17px; color:var(--gold-light); }
+  .reveal-sub{ font-size:12.5px; color:#e9d3b8; line-height:1.5; }
+  .reveal-role-icon{
+    width:60px; height:60px; border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+    margin:2px 0;
+  }
+  .reveal-role-icon svg{ width:28px; height:28px; }
+  .reveal-role-name{ font-family:'Montserrat',sans-serif; font-size:19px; color:var(--cream); }
+  .reveal-role-desc{ font-size:12.5px; color:#e9d3b8; line-height:1.55; max-width:230px; }
+  .reveal-actions{ width:100%; max-width:280px; margin-top:18px; display:flex; flex-direction:column; gap:10px; }
+
+  /* Kreiraj sobu */
+  .code-box{
+    background:rgba(0,0,0,.28);
+    border:1.5px dashed rgba(245,179,66,.4);
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .code-box .cb-label{ font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#b58f6e; margin-bottom:8px; }
+  .code-box .cb-code{ font-family:'Montserrat',sans-serif; font-size:30px; letter-spacing:7px; color:var(--gold-light); }
+  .lobby-list{ display:flex; flex-direction:column; gap:8px; }
+  .lobby-row{
+    display:flex; align-items:center; gap:12px;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(245,179,66,.12);
+    border-radius:12px;
+    padding:10px 13px;
+    animation:fadeIn .3s ease;
+  }
+  .lobby-row .lr-avatar{
+    width:32px; height:32px; border-radius:50%;
+    background:linear-gradient(160deg, var(--felt-light), var(--felt));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Montserrat',sans-serif; font-weight:700; font-size:11px; color:#eafff2;
+    flex:none;
+  }
+  .lobby-row .lr-name{ flex:1; font-size:13px; color:var(--cream); }
+  .lobby-row .lr-tag{ font-size:10px; color:#7be0ac; letter-spacing:.3px; }
+
+  /* Prelazi */
+  .overlay{
+    position:absolute; inset:0;
+    background:rgba(10,2,1,.6);
+    display:flex; align-items:flex-end; justify-content:center;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease, visibility 0s linear .25s;
+    z-index:10;
+  }
+  .overlay.active{ opacity:1; visibility:visible; transition:opacity .25s ease; }
+  .sheet{
+    position:relative;
+    width:100%;
+    max-height:82%;
+    background:var(--maroon-900);
+    border:1px solid rgba(245,179,66,.25);
+    border-bottom:none;
+    border-radius:24px 24px 0 0;
+    padding:10px 22px 24px;
+    display:flex; flex-direction:column;
+    box-shadow:0 -16px 40px rgba(0,0,0,.5);
+    transform:translateY(16px);
+    transition:transform .25s ease;
+    overflow-y:auto;
+  }
+  .overlay.active .sheet{ transform:translateY(0); }
+  .sheet-handle{ width:38px; height:4px; border-radius:3px; background:rgba(245,179,66,.3); margin:6px auto 16px; flex:none; }
+  .sheet-close{
+    position:absolute; top:16px; right:18px;
+    width:32px; height:32px; border-radius:10px;
+    border:1px solid rgba(245,179,66,.3);
+    background:rgba(0,0,0,.2);
+    color:var(--gold-light);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+
+  .detail-head{ display:flex; align-items:center; gap:14px; margin-bottom:16px; padding-right:34px; }
+  .detail-icon{ width:52px; height:52px; border-radius:15px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .detail-icon svg{ width:24px; height:24px; }
+  .detail-icon.team-mafija{ background:rgba(165,42,32,.28); color:#f0a294; }
+  .detail-icon.team-grad{ background:rgba(47,148,99,.2); color:#7be0ac; }
+  .detail-icon.team-neutral{ background:rgba(201,144,47,.22); color:var(--gold-light); }
+  .reveal-role-icon.team-mafija{ background:rgba(165,42,32,.28); color:#f0a294; }
+  .reveal-role-icon.team-grad{ background:rgba(47,148,99,.2); color:#7be0ac; }
+  .reveal-role-icon.team-neutral{ background:rgba(201,144,47,.22); color:var(--gold-light); }
+  .detail-name{ font-family:'Montserrat',sans-serif; font-size:19px; color:var(--gold-light); }
+  .detail-team{ display:inline-block; margin-top:5px; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; }
+  .detail-team.team-mafija{ background:rgba(165,42,32,.3); color:#f0a294; }
+  .detail-team.team-grad{ background:rgba(47,148,99,.22); color:#7be0ac; }
+  .detail-team.team-neutral{ background:rgba(201,144,47,.25); color:var(--gold-light); }
+  .detail-desc{ font-size:13.5px; line-height:1.65; color:#e6d3ba; margin-bottom:20px; }
+  .detail-actions{ display:flex; gap:10px; }
+  .detail-actions .btn{ flex:1; }
+
+  .role-form textarea{
+    width:100%;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(245,179,66,.22);
+    color:var(--cream);
+    border-radius:12px;
+    padding:12px 14px;
+    font-family:'Roboto',sans-serif;
+    font-size:13.5px;
+    outline:none;
+    resize:vertical;
+    min-height:82px;
+  }
+  .role-form textarea:focus{ border-color:var(--gold); }
+  .icon-pick-row{ display:flex; gap:9px; flex-wrap:wrap; }
+  .icon-pick{
+    width:44px; height:44px; border-radius:13px;
+    display:flex; align-items:center; justify-content:center;
+    border:1.5px solid rgba(245,179,66,.2);
+    color:#d8b892;
+    cursor:pointer;
+  }
+  .icon-pick svg{ width:20px; height:20px; }
+  .icon-pick.picked{ border-color:var(--gold); color:var(--gold-light); box-shadow:0 0 0 2px rgba(245,179,66,.25) inset; }
+
+  ::-webkit-scrollbar{ width:5px; }
+  ::-webkit-scrollbar-thumb{ background:rgba(245,179,66,.25); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- Welcome -->
+  <section id="screen-welcome" class="screen active">
+    <div class="logo-frame"><img src="data:image/jpeg;base64,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" alt="MCH logo"></div>
+    <h1 class="brand-title">MCH MAFIJA</h1>
+    <div class="brand-sub">Momčadija</div>
+    <p class="tagline">Igra laži, poverenja i izdaje. Okupi ekipu, podeli uloge i saznaj ko se krije u senci.</p>
+    <div class="welcome-actions">
+      <button class="btn btn-primary" onclick="openAuth('login')">Prijavi se</button>
+      <button class="btn btn-outline" onclick="openAuth('register')">Registruj se</button>
+    </div>
+    <div class="footnote">Momčadija © 2026</div>
+  </section>
+
+  <!-- Auth -->
+  <section id="screen-auth" class="screen">
+    <div class="auth-top">
+      <button class="icon-btn" onclick="go('welcome')" aria-label="Nazad">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="auth-brand">
+      <div class="logo-frame"><img src="data:image/jpeg;base64,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" alt="MCH logo"></div>
+      <div class="auth-heading" id="auth-heading">Dobrodošao nazad</div>
+      <div class="auth-subheading" id="auth-subheading">Prijavi se i vrati se za sto sa ekipom.</div>
+    </div>
+
+    <div class="auth-card">
+      <div class="segmented">
+        <button id="tab-login" class="active" onclick="setAuthMode('login')">Prijava</button>
+        <button id="tab-register" onclick="setAuthMode('register')">Registracija</button>
+      </div>
+
+      <form class="auth-form" onsubmit="return handleAuth(event)">
+        <div class="field">
+          <label>Korisničko ime</label>
+          <input id="auth-username" type="text" placeholder="npr. Davor" required>
+        </div>
+        <div class="field auth-extra" id="field-email">
+          <label>Email</label>
+          <input type="email" placeholder="ime@email.com">
+        </div>
+        <div class="field">
+          <label>Lozinka</label>
+          <input type="password" placeholder="••••••••" required>
+        </div>
+        <div class="field auth-extra" id="field-confirm">
+          <label>Potvrdi lozinku</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="auth-submit" style="margin-top:6px;">Uđi u igru</button>
+        <div class="form-hint">Demo prijava, unesi šta god želiš, samo za probu.</div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <section id="screen-app" class="screen">
+    <div class="app-topbar">
+      <div class="mini-logo"><img src="slikamch.png"></div>
+      <div class="greet"></div>
+      <div class="avatar-chip" id="avatar-chip" onclick="setTab('profil')">IG</div>
+    </div>
+
+    <div class="app-content">
+
+      <!-- Panel: Igraj -->
+      <div class="panel active" id="panel-igraj">
+        <div class="hero-card">
+          <h3>Nova partija</h3>
+          <p>Igraj na jednom telefonu sa ekipom oko stola, ili napravi online sobu i pozovi igrače kodom.</p>
+          <div class="mode-grid">
+            <div class="mode-card" onclick="openLocalScreen()">
+              <div class="mc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+              <div class="mc-body">
+                <div class="mc-title">Lokalna igra</div>
+                <div class="mc-sub">Jedan telefon <br>Igraj na jednom telefonu</div>
+              </div>
+              <div class="mc-chev">›</div>
+            </div>
+            <div class="mode-card" onclick="openRoomScreen('host')">
+              <div class="mc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+              <div class="mc-body">
+                <div class="mc-title">Napravi sobu</div>
+                <div class="mc-sub">Online partija <br>Pozovi ekipu sa kodom sobe</div>
+              </div>
+              <div class="mc-chev">›</div>
+            </div>
+          </div>
+          <div class="join-row">
+            <input type="text" id="join-code-input" placeholder="Unesi kod sobe" maxlength="6">
+            <button class="btn btn-felt btn-small" onclick="joinRoom()">Uđi</button>
+          </div>
+        </div>
+
+        <div class="section-title">Aktivne sobe u grupi</div>
+        <div class="room-card">
+          <div class="room-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="11" height="15" rx="2" transform="rotate(-12 8 14.5)"/><rect x="9.5" y="4" width="11" height="15" rx="2"/></svg></div>
+          <div class="room-info">
+            <div class="rname">Podrum kod Baje</div>
+            <div class="rmeta">7 / 10 igrača</div>
+          </div>
+          <div class="chip chip-open">Čeka igrače</div>
+        </div>
+        <div class="room-card">
+          <div class="room-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3 20c1-4.3 3.2-6.2 6-6.2s5 1.9 6 6.2"/><path d="M15.5 14c2 .2 3.6 1.9 4.5 6"/></svg></div>
+          <div class="room-info">
+            <div class="rname">Petkom uveče</div>
+            <div class="rmeta">10 / 10 igrača</div>
+          </div>
+          <div class="chip chip-full">Puna</div>
+        </div>
+
+        <div class="section-title">Poslednje partije</div>
+        <div class="history-row">
+          <div class="hist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg></div>
+          <div class="hist-info">
+            <div class="hname">Detektiv</div>
+            <div class="hrole">Grad je pobedio</div>
+          </div>
+          <div class="chip badge-win">Pobeda</div>
+        </div>
+        <div class="history-row">
+          <div class="hist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.8-3 8-7 9-4-1-7-4.2-7-9V6l7-3z"/></svg></div>
+          <div class="hist-info">
+            <div class="hname">Mafijaš</div>
+            <div class="hrole">Grad je pobedio</div>
+          </div>
+          <div class="chip badge-loss">Poraz</div>
+        </div>
+        <div class="history-row">
+          <div class="hist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg></div>
+          <div class="hist-info">
+            <div class="hname">Građanin</div>
+            <div class="hrole">Mafija je pobedila</div>
+          </div>
+          <div class="chip badge-loss">Poraz</div>
+        </div>
+      </div>
+
+      <!-- Panel: Uloge -->
+      <div class="panel" id="panel-uloge">
+        <div class="roles-toolbar">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>
+            <input type="text" id="role-search" placeholder="Pretraži uloge..." oninput="renderRoles()">
+          </div>
+          <button class="new-role-btn" onclick="openRoleForm(null)" aria-label="Nova uloga">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div id="roles-list"></div>
+      </div>
+
+      <!-- Panel: Profil -->
+      <div class="panel" id="panel-profil">
+        <div class="profile-head">
+          <div class="profile-avatar" id="profile-avatar">IG</div>
+          <div class="pname" id="profile-name">Igrač</div>
+          <div class="prole">Član</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="sval">12</div><div class="slabel">Odigrano</div></div>
+          <div class="stat-card"><div class="sval">7</div><div class="slabel">Pobeda</div></div>
+          <div class="stat-card"><div class="sval">58%</div><div class="slabel">Win Rate</div></div>
+        </div>
+        <div class="section-title">Podešavanja</div>
+        <div class="settings-list">
+          <div class="settings-item"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 000-3L18 6a2.1 2.1 0 00-3 0L4.5 16.5 4 20z"/><path d="M13.5 7.5l3 3"/></svg></span><span class="s-label">Izmeni profil</span><span class="s-chev">›</span></div>
+          <div class="settings-item"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 00-5 5v3.4c0 1-.4 2-1.1 2.7L5 15h14l-.9-.9c-.7-.7-1.1-1.7-1.1-2.7V8a5 5 0 00-5-5z"/><path d="M9.5 19a2.6 2.6 0 005 0"/></svg></span><span class="s-label">Obaveštenja</span><span class="s-chev">›</span></div>
+          <div class="settings-item"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z"/><path d="M16 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg></span><span class="s-label">Zvuk i vibracija</span><span class="s-chev">›</span></div>
+          <div class="settings-item danger" onclick="go('welcome')"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H6a2 2 0 01-2-2V5a2 2 0 012-2h3"/><path d="M15.5 16.5L20 12l-4.5-4.5"/><path d="M20 12H9"/></svg></span><span class="s-label">Odjavi se</span><span class="s-chev">›</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" id="nav-igraj" onclick="setTab('igraj')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z" stroke-linejoin="round"/></svg>
+        <span>Igraj</span>
+      </button>
+      <button class="nav-btn" id="nav-uloge" onclick="setTab('uloge')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10c0-2 2-3 4-3s4 1 4 3-2 8-4 8-4-6-4-8z"/><path d="M12 10c0-2 2-3 4-3s4 1 4 3-2 8-4 8" /></svg>
+        <span>Uloge</span>
+      </button>
+      <button class="nav-btn" id="nav-profil" onclick="setTab('profil')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6" stroke-linecap="round"/></svg>
+        <span>Profil</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- Lokalna -->
+  <section id="screen-local" class="screen">
+    <div class="step-top">
+      <button class="icon-btn" onclick="backFromLocal()" aria-label="Nazad">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="step-title">Lokalna igra</div>
+    </div>
+
+    <div class="step-body" id="local-setup-view">
+      <div class="step-label">Igrači</div>
+      <div class="step-hint">Dodaj sve igrače koji sede za stolom — telefon će kružiti da svako tajno vidi svoju ulogu.</div>
+      <div class="add-row">
+        <input type="text" id="local-player-input" placeholder="Ime igrača" onkeydown="if(event.key==='Enter'){event.preventDefault();addLocalPlayer();}">
+        <button class="btn btn-felt btn-small" onclick="addLocalPlayer()">Dodaj</button>
+      </div>
+      <div class="chip-list" id="local-players-list"></div>
+      <div class="player-count" id="local-player-count">0 igrača dodato (min. 4)</div>
+
+      <div class="step-label">Uloge u igri</div>
+      <div class="step-hint">Izaberi koje uloge ulaze u špil za ovu partiju.</div>
+      <div class="role-check-list" id="local-role-checks"></div>
+    </div>
+
+    <div class="step-body reveal-wrap" id="local-reveal-view" style="display:none;"></div>
+
+    <div class="step-cta" id="local-setup-cta">
+      <button class="btn btn-primary" onclick="startLocalReveal()">Podeli uloge i počni</button>
+    </div>
+  </section>
+
+  <!-- Kreiraj sobu -->
+  <section id="screen-room" class="screen">
+    <div class="step-top">
+      <button class="icon-btn" onclick="go('app')" aria-label="Nazad">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="step-title" id="room-step-title">Napravi sobu</div>
+    </div>
+
+    <div class="step-body" id="room-setup-view">
+      <div class="step-label">Naziv sobe</div>
+      <div class="field"><input type="text" id="room-name-input" placeholder="npr. Petkom uveče"></div>
+
+      <div class="step-label">Broj igrača</div>
+      <div class="step-hint" id="room-count-hint">Trenutno: 8 igrača</div>
+      <input type="range" min="4" max="15" value="8" id="room-count-range" oninput="updateRoomCount()" style="width:100%; accent-color:var(--gold);">
+
+      <div class="step-label">Uloge u igri</div>
+      <div class="role-check-list" id="room-role-checks"></div>
+    </div>
+
+    <div class="step-body" id="room-lobby-view" style="display:none;">
+      <div class="code-box">
+        <div class="cb-label" id="lobby-code-label">Kod sobe</div>
+        <div class="cb-code" id="lobby-code">------</div>
+      </div>
+      <div class="step-label">Igrači u sobi</div>
+      <div class="lobby-list" id="lobby-players"></div>
+    </div>
+
+    <div class="step-cta" id="room-setup-cta">
+      <button class="btn btn-primary" onclick="createRoom()">Kreiraj sobu</button>
+    </div>
+    <div class="step-cta" id="room-lobby-cta" style="display:none;">
+      <button class="btn btn-primary" onclick="startRoomGame()">Pokreni igru</button>
+    </div>
+  </section>
+
+  <!-- Prelazi detalji uloga -->
+  <div class="overlay" id="overlay-role-detail" onclick="if(event.target===this) closeOverlay('overlay-role-detail')">
+    <div class="sheet">
+      <button class="sheet-close" onclick="closeOverlay('overlay-role-detail')" aria-label="Zatvori">✕</button>
+      <div class="sheet-handle"></div>
+      <div class="detail-head">
+        <div class="detail-icon" id="detail-icon"></div>
+        <div>
+          <div class="detail-name" id="detail-name">—</div>
+          <div class="detail-team" id="detail-team">Tim</div>
+        </div>
+      </div>
+      <div class="detail-desc" id="detail-desc"></div>
+      <div class="detail-actions">
+        <button class="btn btn-outline" onclick="editCurrentRole()">Izmeni</button>
+        <button class="btn btn-primary" onclick="closeOverlay('overlay-role-detail')">Zatvori</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prelazi kreiraj ulogu -->
+  <div class="overlay" id="overlay-role-form" onclick="if(event.target===this) closeOverlay('overlay-role-form')">
+    <div class="sheet">
+      <button class="sheet-close" onclick="closeOverlay('overlay-role-form')" aria-label="Zatvori">✕</button>
+      <div class="sheet-handle"></div>
+      <div class="step-title" id="role-form-title" style="margin-bottom:16px;">Nova uloga</div>
+      <form class="role-form" onsubmit="return saveRoleForm(event)">
+        <div class="field">
+          <label>Naziv uloge</label>
+          <input type="text" id="rf-name" placeholder="npr. Švercer" required>
+        </div>
+        <div class="field">
+          <label>Tim</label>
+          <div class="segmented" id="rf-team-segmented">
+            <button type="button" data-team="grad" onclick="pickTeam('grad')" class="active">Grad</button>
+            <button type="button" data-team="mafija" onclick="pickTeam('mafija')">Mafija</button>
+            <button type="button" data-team="neutral" onclick="pickTeam('neutral')">Neutralni</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Ikona</label>
+          <div class="icon-pick-row" id="rf-icon-row"></div>
+        </div>
+        <div class="field">
+          <label>Opis uloge</label>
+          <textarea id="rf-desc" placeholder="Šta ova uloga radi tokom igre?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:4px;">Sačuvaj ulogu</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* Auth */
+  let authMode = 'login';
+  let state = { username: 'Igrač' };
+
+  function go(screenName){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + screenName).classList.add('active');
+  }
+
+  function openAuth(mode){
+    setAuthMode(mode);
+    go('auth');
+  }
+
+  function setAuthMode(mode){
+    authMode = mode;
+    const isRegister = mode === 'register';
+    document.getElementById('tab-login').classList.toggle('active', !isRegister);
+    document.getElementById('tab-register').classList.toggle('active', isRegister);
+    document.getElementById('auth-heading').textContent = isRegister ? 'Napravi nalog' : 'Dobrodošao nazad';
+    document.getElementById('auth-subheading').textContent = isRegister ? 'Pridruži se Momčadiji za par sekundi.' : 'Prijavi se i vrati se za sto sa ekipom.';
+    document.getElementById('auth-submit').textContent = isRegister ? 'Napravi nalog' : 'Uđi u igru';
+    document.getElementById('field-email').classList.toggle('show', isRegister);
+    document.getElementById('field-confirm').classList.toggle('show', isRegister);
+  }
+
+  function getInitials(name){
+    return (name || '?').trim().split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+  }
+
+  function handleAuth(e){
+    e.preventDefault();
+    const rawName = document.getElementById('auth-username').value.trim();
+    const name = rawName.length ? rawName : 'Igrač';
+    state.username = name;
+    const initials = getInitials(name);
+    
+    document.getElementById('avatar-chip').textContent = initials;
+    document.getElementById('profile-avatar').textContent = initials;
+    document.getElementById('profile-name').textContent = name;
+
+    go('app');
+    setTab('igraj');
+    return false;
+  }
+
+  function setTab(tabName){
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tabName).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('nav-' + tabName).classList.add('active');
+    document.querySelector('.app-content').scrollTop = 0;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function shuffleArr(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  /* Ikone i podaci o ulogama */
+  const ICON_PATHS = {
+    crown: '<path d="M4 18h16M4 18l-1.2-9L8 12l4-7 4 7 5.2-3L19 18"/>',
+    shield: '<path d="M12 3l7 3v6c0 4.8-3 8-7 9-4-1-7-4.2-7-9V6l7-3z"/>',
+    cross: '<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+    magnifier: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/>',
+    person: '<circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/>',
+    mask: '<path d="M12 4c-4.4 0-7.5 3-7.5 7 0 3.2 1.8 5.3 3 6.5.9-.8 1.9-1.2 4.5-1.2s3.6.4 4.5 1.2c1.2-1.2 3-3.3 3-6.5 0-4-3.1-7-7.5-7z"/><circle cx="9.3" cy="10.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.7" cy="10.5" r="1" fill="currentColor" stroke="none"/>',
+    star: '<path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L12 16.9 6.4 20l1.4-6.2-4.8-4.3 6.4-.6L12 3z"/>'
+  };
+  function iconSvg(key){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (ICON_PATHS[key] || ICON_PATHS.star) + '</svg>';
+  }
+  function teamLabel(team){
+    return team === 'mafija' ? 'Mafija' : team === 'grad' ? 'Grad' : 'Neutralni';
+  }
+
+  let rolesData = [
+    { id:'mafijas', name:'Mafija', team:'mafija', icon:'shield', custom:false,
+      detail:'Mafija je redovni član kriminalne organizacije. Tokom noći, zajedno sa ostalim mafijašima, tajno bira jednog igrača za eliminaciju. Danju se pretvara da je običan građanin i pokušava da preusmeri sumnju na nekog drugog.' },
+    { id:'doktor', name:'Doktor', team:'grad', icon:'cross', custom:false,
+      detail:'Doktor svake noći bira jednog igrača kojeg štiti od mafijaškog napada. Ako mafija te noći napadne baš tog igrača, napad je neuspešan. Doktor sme da leči sebe, ali najviše jednom tokom cele partije, pa taj potez mora dobro da isplanira.' },
+    { id:'policajac', name:'Policajac', team:'grad', icon:'magnifier', custom:false,
+      detail:'Policajac svake noći istražuje jednog igrača po svom izboru i saznaje da li pripada mafiji. To znanje mora pažljivo da koristi danju, prerano otkrivanje da je detektiv često znači da postaje sledeća meta mafije.' },
+    { id:'gradjanin', name:'Građanin', team:'grad', icon:'person', custom:false,
+      detail:'Građanin nema noćnu moć, ali je okosnica grada. Njegov jedini alat je zapažanje i ubeđivanje tokom dnevnih rasprava, pažljivim praćenjem ponašanja drugih igrača može da prepozna ko laže i predloži koga treba izbaciti.' },
+    { id:'ludak', name:'Ludak', team:'neutral', icon:'mask', custom:false,
+      detail:'Ludak ne pripada ni gradu ni mafiji, igra isključivo za sebe. Njegov jedini cilj je da ubedi grad da glasa protiv njega. Ako uspe da bude izbačen glasanjem, on pobeđuje bez obzira na ishod ostatka partije.' }
+  ];
+
+  /* Uloge panel: pretraga, detalji, kreiranje */
+  function renderRoles(){
+    const searchEl = document.getElementById('role-search');
+    const q = searchEl ? searchEl.value.trim().toLowerCase() : '';
+    const list = document.getElementById('roles-list');
+    const filtered = rolesData.filter(r => !q || r.name.toLowerCase().includes(q) || teamLabel(r.team).toLowerCase().includes(q));
+    if(!filtered.length){
+      list.innerHTML = '<div class="roles-empty">Nema uloga koje odgovaraju pretrazi.</div>';
+      return;
+    }
+    list.innerHTML = filtered.map(r => `
+      <div class="role-card team-${r.team}" onclick="openRoleDetail('${r.id}')">
+        <div class="r-icon">${iconSvg(r.icon)}</div>
+        <div class="r-body">
+          <div class="r-top"><span class="r-name">${escapeHtml(r.name)}</span><span class="r-team">${teamLabel(r.team)}</span></div>
+          <div class="r-desc">${escapeHtml(r.detail)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openOverlay(id){ document.getElementById(id).classList.add('active'); }
+  function closeOverlay(id){ document.getElementById(id).classList.remove('active'); }
+
+  let currentRoleId = null;
+  function openRoleDetail(id){
+    const r = rolesData.find(x => x.id === id);
+    if(!r) return;
+    currentRoleId = id;
+    const iconEl = document.getElementById('detail-icon');
+    iconEl.className = 'detail-icon team-' + r.team;
+    iconEl.innerHTML = iconSvg(r.icon);
+    document.getElementById('detail-name').textContent = r.name;
+    const teamEl = document.getElementById('detail-team');
+    teamEl.textContent = teamLabel(r.team);
+    teamEl.className = 'detail-team team-' + r.team;
+    document.getElementById('detail-desc').textContent = r.detail;
+    openOverlay('overlay-role-detail');
+  }
+
+  function editCurrentRole(){
+    closeOverlay('overlay-role-detail');
+    openRoleForm(currentRoleId);
+  }
+
+  let editingRoleId = null;
+  let pickedTeam = 'grad';
+  let pickedIcon = 'star';
+  const ICON_CHOICES = ['crown','shield','cross','magnifier','mask','star'];
+
+  function populateIconPicker(){
+    const row = document.getElementById('rf-icon-row');
+    row.innerHTML = ICON_CHOICES.map(k => `<div class="icon-pick" data-icon="${k}" onclick="pickIcon('${k}')">${iconSvg(k)}</div>`).join('');
+    refreshIconPickerUI();
+  }
+  function refreshIconPickerUI(){
+    document.querySelectorAll('#rf-icon-row .icon-pick').forEach(el => {
+      el.classList.toggle('picked', el.dataset.icon === pickedIcon);
+    });
+  }
+  function pickIcon(key){ pickedIcon = key; refreshIconPickerUI(); }
+  function pickTeam(team){
+    pickedTeam = team;
+    document.querySelectorAll('#rf-team-segmented button').forEach(b => {
+      b.classList.toggle('active', b.dataset.team === team);
+    });
+  }
+
+  function openRoleForm(id){
+    editingRoleId = id;
+    populateIconPicker();
+    if(id){
+      const r = rolesData.find(x => x.id === id);
+      document.getElementById('role-form-title').textContent = 'Izmeni ulogu';
+      document.getElementById('rf-name').value = r.name;
+      document.getElementById('rf-desc').value = r.detail;
+      pickTeam(r.team);
+      pickedIcon = r.icon;
+      refreshIconPickerUI();
+    } else {
+      document.getElementById('role-form-title').textContent = 'Nova uloga';
+      document.getElementById('rf-name').value = '';
+      document.getElementById('rf-desc').value = '';
+      pickTeam('grad');
+      pickedIcon = 'star';
+      refreshIconPickerUI();
+    }
+    openOverlay('overlay-role-form');
+  }
+
+  function saveRoleForm(e){
+    e.preventDefault();
+    const name = document.getElementById('rf-name').value.trim();
+    const desc = document.getElementById('rf-desc').value.trim();
+    if(!name || !desc) return false;
+    if(editingRoleId){
+      const r = rolesData.find(x => x.id === editingRoleId);
+      r.name = name; r.team = pickedTeam; r.icon = pickedIcon; r.detail = desc;
+    } else {
+      rolesData.push({ id: 'custom-' + Date.now(), name, team: pickedTeam, icon: pickedIcon, detail: desc, custom: true });
+    }
+    renderRoles();
+    renderRoleChecks('local-role-checks');
+    renderRoleChecks('room-role-checks');
+    closeOverlay('overlay-role-form');
+    return false;
+  }
+
+  function renderRoleChecks(containerId){
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    const prevChecked = {};
+    el.querySelectorAll('input[type=checkbox]').forEach(cb => { prevChecked[cb.dataset.id] = cb.checked; });
+    el.innerHTML = rolesData.map(r => {
+      const checked = (r.id in prevChecked) ? prevChecked[r.id] : true;
+      return `<label class="role-check-row">
+        <input type="checkbox" data-id="${r.id}" ${checked ? 'checked' : ''}>
+        <span class="rc-name">${escapeHtml(r.name)}</span>
+        <span class="rc-team team-${r.team}">${teamLabel(r.team)}</span>
+      </label>`;
+    }).join('');
+  }
+
+  function getCheckedRoles(containerId){
+    const ids = Array.from(document.querySelectorAll('#' + containerId + ' input[type=checkbox]:checked')).map(cb => cb.dataset.id);
+    return rolesData.filter(r => ids.includes(r.id));
+  }
+
+  /* Lokalna */
+  let localPlayers = [];
+  let localAssignments = [];
+  let localRevealIndex = 0;
+  let localRevealShown = false;
+
+  function openLocalScreen(){
+    localPlayers = [];
+    renderLocalPlayers();
+    renderRoleChecks('local-role-checks');
+    document.getElementById('local-setup-view').style.display = 'block';
+    document.getElementById('local-reveal-view').style.display = 'none';
+    document.getElementById('local-setup-cta').style.display = 'block';
+    go('local');
+  }
+
+  function addLocalPlayer(){
+    const input = document.getElementById('local-player-input');
+    const name = input.value.trim();
+    if(!name) return;
+    localPlayers.push(name);
+    input.value = '';
+    renderLocalPlayers();
+    input.focus();
+  }
+  function removeLocalPlayer(i){
+    localPlayers.splice(i, 1);
+    renderLocalPlayers();
+  }
+  function renderLocalPlayers(){
+    const list = document.getElementById('local-players-list');
+    list.innerHTML = localPlayers.map((p, i) => `<div class="player-chip">${escapeHtml(p)}<button onclick="removeLocalPlayer(${i})" aria-label="Ukloni">✕</button></div>`).join('');
+    const countEl = document.getElementById('local-player-count');
+    countEl.textContent = localPlayers.length + ' igrača dodato (min. 4)';
+    countEl.classList.toggle('warn', localPlayers.length < 4);
+  }
+
+  function expandRoles(roles, count){
+    if(!roles.length) return [];
+    let pool = [];
+    while(pool.length < count){
+      pool = pool.concat(shuffleArr(roles));
+    }
+    return shuffleArr(pool.slice(0, count));
+  }
+
+  function startLocalReveal(){
+    if(localPlayers.length < 4){
+      alert('Dodaj bar 4 igrača da počneš partiju.');
+      return;
+    }
+    let roles = getCheckedRoles('local-role-checks');
+    if(!roles.length) roles = rolesData;
+    const shuffledRoles = expandRoles(roles, localPlayers.length);
+    const shuffledPlayers = shuffleArr(localPlayers);
+    localAssignments = shuffledPlayers.map((p, i) => ({ player: p, role: shuffledRoles[i] }));
+    localRevealIndex = 0;
+    localRevealShown = false;
+    document.getElementById('local-setup-view').style.display = 'none';
+    document.getElementById('local-setup-cta').style.display = 'none';
+    document.getElementById('local-reveal-view').style.display = 'flex';
+    renderRevealStep();
+  }
+
+  function renderRevealStep(){
+    const wrap = document.getElementById('local-reveal-view');
+    const total = localAssignments.length;
+    const cur = localAssignments[localRevealIndex];
+    const progress = `<div class="reveal-progress">IGRAČ ${localRevealIndex + 1} / ${total}</div>`;
+    if(!localRevealShown){
+      wrap.innerHTML = progress + `
+        <div class="reveal-card">
+          <div class="reveal-player-name">${escapeHtml(cur.player)}</div>
+          <div class="reveal-sub">Dodaj telefon ovom igraču. Kad je sam/sama, neka klikne dugme ispod.</div>
+        </div>
+        <div class="reveal-actions">
+          <button class="btn btn-primary" onclick="revealRole()">Prikaži moju ulogu</button>
+        </div>`;
+    } else {
+      const r = cur.role;
+      const isLast = (localRevealIndex + 1) >= total;
+      wrap.innerHTML = progress + `
+        <div class="reveal-card">
+          <div class="reveal-role-icon team-${r.team}">${iconSvg(r.icon)}</div>
+          <div class="reveal-role-name">${escapeHtml(r.name)}</div>
+          <div class="reveal-role-desc">${escapeHtml(r.detail)}</div>
+        </div>
+        <div class="reveal-actions">
+          <button class="btn btn-felt" onclick="${isLast ? 'finishReveal()' : 'nextRevealPlayer()'}">${isLast ? 'Završi i počni igru' : 'Sakrij i prosledi telefon'}</button>
+        </div>`;
+    }
+  }
+  function revealRole(){ localRevealShown = true; renderRevealStep(); }
+  function nextRevealPlayer(){ localRevealIndex++; localRevealShown = false; renderRevealStep(); }
+  function finishReveal(){
+    alert('Sve uloge su podeljene. Igra počinje! (demo)');
+    go('app');
+  }
+  function backFromLocal(){ go('app'); }
+
+  /* Kreiraj sobu/Pridruzi se kodom */
+  let roomMode = 'host';
+  let roomCode = '';
+  const DEMO_NAMES = ['Marko', 'Ivana', 'Boban', 'Tijana', 'Nemanja', 'Jovana', 'Stefan', 'Ana'];
+
+  function openRoomScreen(mode){
+    roomMode = mode;
+    document.getElementById('room-step-title').textContent = mode === 'host' ? 'Napravi sobu' : 'Pridruži se sobi';
+    document.getElementById('room-setup-view').style.display = mode === 'host' ? 'block' : 'none';
+    document.getElementById('room-lobby-view').style.display = 'none';
+    document.getElementById('room-setup-cta').style.display = mode === 'host' ? 'block' : 'none';
+    document.getElementById('room-lobby-cta').style.display = 'none';
+    if(mode === 'host'){
+      document.getElementById('room-name-input').value = '';
+      document.getElementById('room-count-range').value = 8;
+      updateRoomCount();
+      renderRoleChecks('room-role-checks');
+    }
+    go('room');
+  }
+
+  function updateRoomCount(){
+    const v = document.getElementById('room-count-range').value;
+    document.getElementById('room-count-hint').textContent = 'Trenutno: ' + v + ' igrača';
+  }
+
+  function randomRoomCode(){
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for(let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  }
+
+  function addLobbyRow(name, tag){
+    const lobby = document.getElementById('lobby-players');
+    const row = document.createElement('div');
+    row.className = 'lobby-row';
+    row.innerHTML = `<div class="lr-avatar">${getInitials(name)}</div><div class="lr-name">${escapeHtml(name)}</div><div class="lr-tag">${escapeHtml(tag)}</div>`;
+    lobby.appendChild(row);
+  }
+
+  function createRoom(){
+    roomCode = randomRoomCode();
+    document.getElementById('lobby-code-label').textContent = 'Kod sobe — podeli sa ekipom';
+    document.getElementById('lobby-code').textContent = roomCode;
+    document.getElementById('room-setup-view').style.display = 'none';
+    document.getElementById('room-setup-cta').style.display = 'none';
+    document.getElementById('room-lobby-view').style.display = 'block';
+    document.getElementById('room-lobby-cta').style.display = 'block';
+    document.getElementById('room-step-title').textContent = document.getElementById('room-name-input').value.trim() || 'Soba';
+
+    const maxPlayers = parseInt(document.getElementById('room-count-range').value, 10);
+    const lobby = document.getElementById('lobby-players');
+    lobby.innerHTML = '';
+    addLobbyRow(state.username, 'Domaćin');
+
+    const demo = shuffleArr(DEMO_NAMES).slice(0, Math.max(0, maxPlayers - 1));
+    demo.forEach((name, idx) => {
+      setTimeout(() => addLobbyRow(name, 'Spreman'), 500 + idx * 550);
+    });
+  }
+
+  function joinRoom(){
+    const input = document.getElementById('join-code-input');
+    const code = input.value.trim().toUpperCase();
+    if(!code){ alert('Unesi kod sobe.'); return; }
+    roomMode = 'guest';
+    roomCode = code;
+    document.getElementById('room-step-title').textContent = 'Čekaš domaćina';
+    document.getElementById('room-setup-view').style.display = 'none';
+    document.getElementById('room-setup-cta').style.display = 'none';
+    document.getElementById('room-lobby-cta').style.display = 'none';
+    document.getElementById('room-lobby-view').style.display = 'block';
+    document.getElementById('lobby-code-label').textContent = 'Kod sobe';
+    document.getElementById('lobby-code').textContent = roomCode;
+
+    const lobby = document.getElementById('lobby-players');
+    lobby.innerHTML = '';
+    const demo = shuffleArr(DEMO_NAMES).slice(0, 3);
+    demo.forEach(n => addLobbyRow(n, 'Spreman'));
+    addLobbyRow(state.username, 'Ti');
+    input.value = '';
+    go('room');
+  }
+
+  function startRoomGame(){
+    alert('Igra počinje! (demo)');
+    go('app');
+  }
+
+  /* Renderovanje */
+  renderRoles();
+</script>
+
+</body>
+</html>
