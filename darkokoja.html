@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Darko Koja — Građevinac & kreator</title>
+<meta name="description" content="Darko Koja (@darkokoja) — gradim kuće od livade do krova i delim ceo proces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --concrete:#F4F2ED;
+    --orange:#FF6A13;
+    --orange-dark:#E1590A;
+    --black:#15130F;
+    --gray:#726C63;
+    --line:#E6E1D8;
+    --shadow: 0 30px 60px -25px rgba(21,19,15,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html, body{
+    max-width:100%;
+    overflow-x:hidden;
+    touch-action: pan-y;
+  }
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--black);
+    font-family:'Manrope', sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Big Shoulders Display','Manrope',sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.95;
+    margin:0;
+    color:var(--black);
+  }
+  p{margin:0; color:var(--black); font-weight:400;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:3px solid var(--orange); outline-offset:3px;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gray);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;
+    height:2px;
+    background:var(--orange);
+    display:inline-block;
+  }
+
+  /* Navigacija */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .brand span{color:var(--orange);}
+  .nav-links{display:flex; align-items:center; gap:28px;}
+  .nav-links a{
+    font-size:14px; font-weight:600; color:var(--black);
+    padding:4px 2px; border-bottom:2px solid transparent;
+    transition:border-color .2s ease;
+  }
+  .nav-links a:hover{border-color:var(--orange);}
+  .nav-cta{
+    background:var(--black); color:var(--white);
+    padding:10px 18px; border-radius:999px; font-size:14px; font-weight:700;
+    border:1px solid var(--black);
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-cta:hover{background:var(--orange); border-color:var(--orange);}
+  .nav-mobile-hide{display:flex;}
+  @media (max-width:720px){
+    .nav-mobile-hide{display:none;}
+  }
+
+  /* Hero */
+  .hero{padding:64px 0 88px; overflow:hidden;}
+  .hero-grid{
+    display:grid;
+    grid-template-columns:minmax(300px,440px) 1fr;
+    gap:56px;
+    align-items:center;
+  }
+
+  /* Reel stack */
+  .reel-stack{
+    position:relative;
+    width:100%;
+    max-width:440px;
+    aspect-ratio: 4 / 5;
+    margin:0 auto;
+  }
+  .reel-card{
+    position:absolute;
+    top:50%; left:50%;
+    width:64%;
+    aspect-ratio:9/16;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:3px solid var(--white);
+    outline:1px solid rgba(21,19,15,0.08);
+    cursor:pointer;
+    transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease, filter .35s ease, box-shadow .35s ease;
+    transform-origin:center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+  .reel-card:focus-visible{outline-offset:4px;}
+
+  .reel-front{
+    z-index:3;
+    transform:translate(-50%,-50%) rotate(0deg) scale(1);
+  }
+  .reel-left{
+    z-index:2;
+    left:24%;
+    transform:translate(-50%,-46%) rotate(-9deg) scale(0.82);
+    filter:brightness(0.92);
+  }
+  .reel-right{
+    z-index:1;
+    left:76%;
+    transform:translate(-50%,-46%) rotate(9deg) scale(0.82);
+    filter:brightness(0.88);
+  }
+
+  .reel-stack.is-hovering .reel-card{filter:brightness(0.55) saturate(0.85);}
+  .reel-stack.is-hovering .reel-card.is-active{
+    z-index:6;
+    filter:brightness(1) saturate(1);
+    box-shadow:0 40px 80px -20px rgba(21,19,15,0.55);
+  }
+  .reel-front.is-active{transform:translate(-50%,-50%) rotate(0deg) scale(1.14);}
+  .reel-left.is-active{transform:translate(-50%,-48%) rotate(-2deg) scale(1.1); left:24%;}
+  .reel-right.is-active{transform:translate(-50%,-48%) rotate(2deg) scale(1.1); left:76%;}
+
+  .reel-media{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    background:#1c1a15; /* fallback while video loads / if file missing */
+  }
+
+  .reel-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
+  }
+  .reel-label{
+    position:absolute; left:12px; bottom:12px; right:44px;
+    color:var(--white);
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:16px;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+    text-shadow:0 2px 8px rgba(0,0,0,0.4);
+  }
+  .reel-icon{
+    position:absolute; top:10px; right:10px;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:rgba(21,19,15,0.55);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--white);
+  }
+  .reel-icon svg{width:13px; height:13px;}
+  .icon-sound{opacity:0; transform:scale(0.7); transition:opacity .25s ease, transform .25s ease;}
+  .icon-mute{opacity:1; transition:opacity .25s ease, transform .25s ease;}
+  .reel-card.is-active .icon-mute{opacity:0; transform:scale(0.7);}
+  .reel-card.is-active .icon-sound{opacity:1; transform:scale(1);}
+
+  /* Hero copy */
+  .hero-copy h1{
+    font-size:clamp(40px, 5.4vw, 68px);
+  }
+  .hero-copy .sub{
+    margin-top:20px;
+    max-width:480px;
+    font-size:17px;
+    line-height:1.55;
+    color:var(--gray);
+  }
+  .hero-eyebrow{margin-bottom:18px;}
+
+  .stat-row{
+    display:flex; gap:32px;
+    margin-top:32px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .stat b{
+    display:block;
+    font-family:'Big Shoulders Display', sans-serif;
+    font-size:26px;
+    font-weight:800;
+  }
+  .stat span{font-size:13px; color:var(--gray); font-weight:600;}
+
+  .cta-row{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 24px;
+    border-radius:999px;
+    font-size:15px; font-weight:700;
+    border:2px solid transparent;
+    transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--orange); color:var(--white);}
+  .btn-primary:hover{background:var(--orange-dark);}
+  .btn-outline{border-color:var(--black); color:var(--black); background:transparent;}
+  .btn-outline:hover{background:var(--black); color:var(--white);}
+
+  /* Marke */
+  .marquee{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--concrete);
+    overflow:hidden;
+    padding:14px 0;
+    width:100%;
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    animation:scroll 26s linear infinite;
+    gap:0;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+  @media (prefers-reduced-motion:reduce){
+    .marquee-track{animation:none;}
+    .reel-media{animation:none;}
+  }
+  .marquee-track span{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:0 22px;
+    white-space:nowrap;
+    color:var(--gray);
+  }
+  .marquee-track span.dot{color:var(--orange); padding:0 6px;}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* About */
+  .about{padding:96px 0;}
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about h2{font-size:clamp(30px,3.6vw,42px); max-width:9ch;}
+  .about-copy p{font-size:16.5px; line-height:1.7; color:var(--gray); max-width:52ch;}
+  .about-copy p + p{margin-top:16px;}
+  .about-copy .highlight{
+    color:var(--black); font-weight:600;
+  }
+  .about-link{
+    display:inline-flex; align-items:center; gap:8px;
+    margin-top:22px;
+    font-weight:700; font-size:14px;
+    border-bottom:2px solid var(--orange);
+    padding-bottom:2px;
+  }
+
+  /* Kategorije */
+  .categories{padding:0 0 96px;}
+  .cat-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .cat-card{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:28px 20px;
+    min-height:200px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    transition:background .2s ease;
+  }
+  .cat-card:hover{background:var(--concrete);}
+  .cat-num{font-size:13px; color:var(--gray); font-weight:700;}
+  .cat-name{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800; text-transform:uppercase;
+    font-size:19px; margin-top:26px;
+  }
+  .cat-desc{font-size:13.5px; color:var(--gray); margin-top:10px; line-height:1.5;}
+
+  @media (max-width:900px){
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .cat-grid{grid-template-columns:1fr;}
+  }
+
+  /* CTA */
+  .follow{
+    background:var(--orange);
+    padding:80px 0;
+  }
+  .follow-grid{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap;
+  }
+  .follow h2{font-size:clamp(30px,4.2vw,48px); max-width:11ch; color:var(--black);}
+  .follow p{margin-top:14px; color:var(--black); font-weight:500; max-width:40ch;}
+  .follow-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn-dark{background:var(--black); color:var(--white);}
+  .btn-dark:hover{background:#000;}
+  .btn-light{background:var(--white); color:var(--black);}
+  .btn-light:hover{background:#f0f0f0;}
+
+  /* Footer */
+  footer{padding:40px 0; }
+  .footer-inner{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+    padding-top:28px; border-top:1px solid var(--line);
+  }
+  .footer-inner p{font-size:13px; color:var(--gray);}
+  .socials{display:flex; gap:16px;}
+  .socials a{font-size:13px; font-weight:700; color:var(--black); border-bottom:2px solid transparent;}
+  .socials a:hover{border-color:var(--orange);}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+    .hero-copy .sub{margin-left:auto; margin-right:auto;}
+    .stat-row{justify-content:center;}
+    .cta-row{justify-content:center;}
+    .about-grid{grid-template-columns:1fr;}
+    .about-copy p{max-width:100%;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 20px;}
+    .stat-row{gap:22px;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">DARKO<span>KOJA</span></div>
+      <div class="nav-links nav-mobile-hide">
+        <a href="#o-meni">O meni</a>
+        <a href="#sadrzaj">Sadržaj</a>
+        <a href="#zapratite">Zapratite</a>
+      </div>
+      <a class="nav-cta" href="#zapratite">Zapratite</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+
+      <div class="reel-stack" id="reelStack">
+        <div class="reel-card reel-left" data-name="Dvorište" tabindex="0" aria-label="Reel: Dvorište">
+          <video class="reel-media" src="nuviovideo/dkvideo2.mp4" autoplay muted loop playsinline></video>
+          <div class="reel-scrim"></div>
+          <div class="reel-label">Dvorište</div>
+          <div class="reel-icon icon-mute" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
+          </div>
+          <div class="reel-icon icon-sound" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </div>
+        </div>
+
+        <div class="reel-card reel-right" data-name="Fasada" tabindex="0" aria-label="Reel: Fasada">
+          <video class="reel-media" src="nuviovideo/dkvideo3.mp4" autoplay muted loop playsinline></video>
+          <div class="reel-scrim"></div>
+          <div class="reel-label">Fasada</div>
+          <div class="reel-icon icon-mute" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
+          </div>
+          <div class="reel-icon icon-sound" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </div>
+        </div>
+
+        <div class="reel-card reel-front" data-name="Gradi ko' Ja" tabindex="0" aria-label="Reel: Gradi ko' Ja">
+          <video class="reel-media" src="nuviovideo/dkvideo1.mp4" autoplay muted loop playsinline></video>
+          <div class="reel-scrim"></div>
+          <div class="reel-label">Gradi ko' Ja</div>
+          <div class="reel-icon icon-mute" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
+          </div>
+          <div class="reel-icon icon-sound" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <div class="eyebrow hero-eyebrow">Građevinac · preduzetnik · @darkokoja</div>
+        <h1>Od prazne<br>livade, do<br>gotovog krova.</h1>
+        <p class="sub">Pratim i snimam ceo proces gradnje: temelji, zidovi, stepenice, fasada, krov. Bez uvijanja, korak po korak, onako kako zaista izgleda na gradilištu.</p>
+
+        <div class="stat-row">
+          <div class="stat"><b>500K+</b><span>Pratilaca</span></div>
+          <div class="stat"><b>1K+</b><span>Objava</span></div>
+          <div class="stat"><b>20+</b><span>Godina Iskustva</span></div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.instagram.com/darkokoja/">Zapratite na Instagramu</a>
+          <a class="btn btn-outline" href="#o-meni">O meni</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Fasada</span><span class="dot">·</span>
+      <span>Solari</span><span class="dot">·</span>
+      <span>Dvorište</span><span class="dot">·</span>
+      <span>Podovi</span><span class="dot">·</span>
+      <span>Plac</span><span class="dot">·</span>
+      <span>Izolacija</span><span class="dot">·</span>
+      <span>Materijal</span><span class="dot">·</span>
+      <span>Regulacije</span><span class="dot">·</span>
+      <span>Fasada</span><span class="dot">·</span>
+      <span>Solari</span><span class="dot">·</span>
+      <span>Dvorište</span><span class="dot">·</span>
+      <span>Podovi</span><span class="dot">·</span>
+      <span>Plac</span><span class="dot">·</span>
+      <span>Izolacija</span><span class="dot">·</span>
+      <span>Materijal</span><span class="dot">·</span>
+      <span>Regulacije</span><span class="dot">·</span>
+      <span>Fasada</span><span class="dot">·</span>
+      <span>Solari</span><span class="dot">·</span>
+      <span>Dvorište</span><span class="dot">·</span>
+      <span>Podovi</span><span class="dot">·</span>
+      <span>Plac</span><span class="dot">·</span>
+      <span>Izolacija</span><span class="dot">·</span>
+      <span>Materijal</span><span class="dot">·</span>
+      <span>Regulacije</span><span class="dot">·</span>
+      <span>Fasada</span><span class="dot">·</span>
+      <span>Solari</span><span class="dot">·</span>
+      <span>Dvorište</span><span class="dot">·</span>
+      <span>Podovi</span><span class="dot">·</span>
+      <span>Plac</span><span class="dot">·</span>
+      <span>Izolacija</span><span class="dot">·</span>
+      <span>Materijal</span><span class="dot">·</span>
+      <span>Regulacije</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <section class="about" id="o-meni">
+    <div class="wrap about-grid">
+      <div>
+        <div class="eyebrow">O meni</div>
+        <h2 style="margin-top:14px;">Građevinac.<br>Preduzetnik.<br>Borac.</h2>
+      </div>
+      <div class="about-copy">
+        <p>Ime mi je <span class="highlight">Darko Kojić</span>. Gradim kuće od temelja do krova i snimam svaki korak - pripremu placa, armaturu i beton, zidanje, stepenice, fasadu i enterijer.</p>
+        <p>Sadržaj je praktičan: alat koji koristim, redosled radova i greške koje treba izbeći. Za projekte u kamenu, pratite i <span class="highlight">@prirodni_kamen_kojic</span>.</p>
+        <a class="about-link" href="#sadrzaj">Pogledaj šta pratiš ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories" id="sadrzaj">
+    <div class="wrap">
+      <div class="cat-grid">
+        <div class="cat-card">
+          <span class="cat-num">01</span>
+          <div>
+            <div class="cat-name">Dvorište</div>
+            <p class="cat-desc">Uređenje dvorišta, od kapije do poslednjeg kamena.</p>
+          </div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-num">02</span>
+          <div>
+            <div class="cat-name">Gradi ko' Ja</div>
+            <p class="cat-desc">Glavna serija. Gradnja kuće, nedelja po nedelja.</p>
+          </div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-num">03</span>
+          <div>
+            <div class="cat-name">Stepenice</div>
+            <p class="cat-desc">Zanatski detalji, od oplate do gotovih stepenica.</p>
+          </div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-num">04</span>
+          <div>
+            <div class="cat-name">Fasada</div>
+            <p class="cat-desc">Izolacija, malter i završni slojevi fasade.</p>
+          </div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-num">05</span>
+          <div>
+            <div class="cat-name">Solari</div>
+            <p class="cat-desc">Solarni paneli i energetska nezavisnost kuće.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="follow" id="zapratite">
+    <div class="wrap follow-grid">
+      <div>
+        <h2>Zapratite proces, iz nedelje u nedelju.</h2>
+        <p>1000+ objava, jedan zanat. Novi video svake nedelje bez filtera, direktno sa gradilišta.</p>
+      </div>
+      <div class="follow-actions">
+        <a class="btn btn-dark" href="https://www.instagram.com/darkokoja/">Instagram · @darkokoja</a>
+        <a class="btn btn-light" href="https://www.youtube.com/@DarkoKojaKojic">YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-inner">
+        <p>© 2026 Darko Koja Kojić — Građevinac & kreator sadržaja.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/darkokoja/">Instagram</a>
+          <a href="https://www.youtube.com/@DarkoKojaKojic">YouTube</a>
+          <a href="https://www.tiktok.com/@darkokoja">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  const stack = document.getElementById('reelStack');
+  const cards = Array.from(stack.querySelectorAll('.reel-card'));
+
+  const HOLD_THRESHOLD = 280;   // ms - preko ovoga se smatra "drži prst" (hold)
+  const MOVE_CANCEL_PX = 12;    // ako prst pobegne dalje od ovoga, gest se otkazuje (skrol)
+
+  let activeCard = null;      // koja kartica je trenutno vizuelno aktivna (uvećana + zvuk)
+  let toggledCard = null;     // kartica koja je "zaključana" aktivna klikom/tapom (dok se ponovo ne tapne)
+
+  function activateCard(card) {
+    stack.classList.add('is-hovering');
+    cards.forEach(c => {
+      if (c !== card) {
+        c.classList.remove('is-active');
+        const v = c.querySelector('video.reel-media');
+        if (v) v.muted = true;
+      }
+    });
+    card.classList.add('is-active');
+    const video = card.querySelector('video.reel-media');
+    if (video) {
+      video.muted = false;
+      video.play().catch(() => {});
+    }
+    activeCard = card;
+  }
+
+  function deactivateCard(card) {
+    card.classList.remove('is-active');
+    const video = card.querySelector('video.reel-media');
+    if (video) video.muted = true;
+    if (activeCard === card) activeCard = null;
+    if (!activeCard) stack.classList.remove('is-hovering');
+  }
+
+  function deactivateAll() {
+    cards.forEach(deactivateCard);
+    toggledCard = null;
+  }
+
+  /* ---------- MIŠ / DESKTOP (hover) ---------- */
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+      if (e.pointerType === 'touch') return;
+      activateCard(card);
+    });
+    card.addEventListener('mouseleave', (e) => {
+      if (e.pointerType === 'touch') return;
+      deactivateCard(card);
+      if (toggledCard === card) toggledCard = null;
+    });
+  });
+
+  /* ---------- DODIR / MOBILNI (tap = toggle, drži = hold) ---------- */
+  cards.forEach(card => {
+    let startX = 0, startY = 0, startTime = 0;
+    let wasToggled = false;
+    let moved = false;
+    let touchActive = false;
+
+    card.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+      touchActive = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      startTime = Date.now();
+      wasToggled = (toggledCard === card);
+      // odmah, glatko, podigni video (bez čekanja na drugi tap)
+      activateCard(card);
+    }, { passive: true });
+
+    card.addEventListener('pointermove', (e) => {
+      if (!touchActive) return;
+      if (Math.abs(e.clientX - startX) > MOVE_CANCEL_PX || Math.abs(e.clientY - startY) > MOVE_CANCEL_PX) {
+        moved = true;
+      }
+    }, { passive: true });
+
+    function endTouch(e) {
+      if (!touchActive) return;
+      touchActive = false;
+      const duration = Date.now() - startTime;
+
+      if (moved) {
+        // korisnik je skrolovao/prevukao preko kartice - otkaži gest
+        deactivateCard(card);
+        if (toggledCard === card) toggledCard = null;
+        return;
+      }
+
+      if (duration >= HOLD_THRESHOLD) {
+        // DRŽANJE: kad pusti prst, smanji i ugasi zvuk
+        deactivateCard(card);
+        toggledCard = null;
+      } else {
+        // TAP: klik pali/gasi trajno (dok se ponovo ne tapne)
+        if (wasToggled) {
+          deactivateCard(card);
+          toggledCard = null;
+        } else {
+          // već je aktivirano na pointerdown - samo ostaje upaljeno
+          toggledCard = card;
+        }
+      }
+    }
+
+    card.addEventListener('pointerup', endTouch, { passive: true });
+    card.addEventListener('pointercancel', () => {
+      if (!touchActive) return;
+      touchActive = false;
+      deactivateCard(card);
+      toggledCard = null;
+    }, { passive: true });
+
+    /* Tastatura: Enter / Space ponaša se kao tap-toggle */
+    card.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      if (toggledCard === card) {
+        deactivateCard(card);
+        toggledCard = null;
+      } else {
+        activateCard(card);
+        toggledCard = card;
+      }
+    });
+  });
+
+  /* Tap/klik van stacka gasi trenutno aktivnu karticu */
+  document.addEventListener('pointerdown', (e) => {
+    if (!stack.contains(e.target) && (activeCard || toggledCard)) {
+      deactivateAll();
+    }
+  });
+
+  cards.forEach(card => {
+    const v = card.querySelector('video.reel-media');
+    if (v) {
+      v.muted = true;
+      v.play().catch(() => {});
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

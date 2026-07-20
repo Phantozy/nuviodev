@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasserstain</title>
+<meta name="description" content="Yasserstain">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0c;
+    --panel:#131217;
+    --panel-2:#1b1a20;
+    --steel:#9a9aa3;
+    --cream:#f3f0e6;
+    --blue:#3358ff;
+    --blue-deep:#182463;
+    --blue-bright:#5b7dff;
+    --brass:#c9a24b;
+    --brass-soft:#e2c37a;
+    --brass-deep:#5b471c;
+    --line: rgba(243,240,230,0.14);
+    --line-soft: rgba(243,240,230,0.07);
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:88px;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  ::selection{background:var(--blue);color:var(--cream);}
+
+  h1,h2,h3{
+    font-family:'Poppins',sans-serif;
+    font-weight:800;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--blue-bright);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px;height:1px;
+    background:var(--blue-bright);
+    display:inline-block;
+  }
+  .eyebrow.gold{color:var(--brass-soft);}
+  .eyebrow.gold::before{background:var(--brass-soft);}
+
+  /* ---------- noise overlay ---------- */
+  .grain{
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:500;
+    opacity:0.05;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- custom cursor ---------- */
+  #cursorRing{
+    position:fixed;top:0;left:0;
+    width:34px;height:34px;
+    margin:-17px 0 0 -17px;
+    border-radius:50%;
+    border:1px solid var(--blue-bright);
+    pointer-events:none;
+    z-index:600;
+    transition:transform .18s ease, border-color .2s ease, opacity .2s ease, width .2s ease, height .2s ease, margin .2s ease;
+    opacity:0;
+  }
+  body.cursor-ready #cursorRing{opacity:1;}
+  #cursorRing.grow{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:var(--brass-soft);}
+
+  /* ================= NAV ================= */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    z-index:400;
+    padding:20px 0;
+    transition:background .35s ease, border-color .35s ease, backdrop-filter .35s ease, padding .35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,10,12,0.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    border-color:var(--line-soft);
+    padding:14px 0;
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Poppins',sans-serif;font-weight:800;font-size:19px;
+    letter-spacing:0.01em;
+    text-decoration:none;
+  }
+  .logo-coin{
+    width:24px;height:24px;border-radius:50%;
+    background:conic-gradient(from 200deg, var(--blue), var(--brass) 50%, var(--blue));
+    flex:none;
+  }
+  .navlinks{
+    display:flex;gap:34px;
+    list-style:none;margin:0;padding:0;
+  }
+  .navlinks a{
+    text-decoration:none;
+    font-size:14px;font-weight:500;
+    color:var(--steel);
+    position:relative;
+    padding-bottom:3px;
+  }
+  .navlinks a:hover{color:var(--cream);}
+  .navlinks a::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--blue-bright);
+    transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .nav-cta{
+    font-family:'Inter',sans-serif;
+    font-size:13px;letter-spacing:0.02em;text-transform:uppercase;
+    background:var(--cream);color:var(--ink);
+    padding:10px 18px;border-radius:100px;
+    text-decoration:none;font-weight:700;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .nav-cta:hover{background:var(--blue-bright);color:var(--cream);transform:translateY(-1px);}
+  .navburger{display:none;}
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:140px;padding-bottom:80px;
+    background:
+      radial-gradient(1100px 620px at 82% 8%, rgba(51,88,255,0.20), transparent 60%),
+      radial-gradient(900px 500px at 8% 95%, rgba(201,162,75,0.10), transparent 60%),
+      var(--ink);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    align-items:center;
+    gap:20px;
+  }
+  .hero h1{
+    font-size:clamp(52px, 8.4vw, 118px);
+    line-height:0.94;
+    color:var(--cream);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--blue-bright);
+  }
+  .hero-sub{
+    max-width:480px;
+    margin:26px 0 38px;
+    font-size:18px;
+    line-height:1.55;
+    color:var(--steel);
+  }
+  .hero-sub b{color:var(--cream);font-weight:600;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:15px 26px;border-radius:100px;
+    font-size:14.5px;font-weight:600;
+    text-decoration:none;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--blue);color:var(--cream);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(51,88,255,0.55);}
+  .btn-ghost{border-color:var(--line);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--brass-soft);color:var(--brass-soft);transform:translateY(-2px);}
+
+  .scrollcue{
+    margin-top:64px;
+    display:flex;align-items:center;gap:10px;
+    font-family:'Inter',sans-serif;font-weight:600;
+    font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--steel);
+  }
+  .scrollcue .line{width:1px;height:34px;background:linear-gradient(var(--steel),transparent);animation:scrollpulse 1.8s ease-in-out infinite;}
+  @keyframes scrollpulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ---- coin ---- */
+  .coin-wrap{
+    perspective:1700px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .coin{
+    width:clamp(240px,26vw,360px);
+    height:clamp(240px,26vw,360px);
+    position:relative;
+    transform-style:preserve-3d;
+    cursor:grab;
+    touch-action:none;
+    will-change:transform;
+  }
+  .coin:active{cursor:grabbing;}
+  .coin-face{
+    position:absolute;inset:0;
+    border-radius:50%;
+    backface-visibility:hidden;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.7), inset 0 0 0 6px rgba(0,0,0,0.25);
+  }
+  .coin-front{
+    background:radial-gradient(circle at 34% 28%, #5b7dff 0%, #3358ff 42%, #182463 100%);
+    color:var(--cream);
+  }
+  .coin-back{
+    background:radial-gradient(circle at 34% 28%, #f2d68e 0%, #c9a24b 45%, #5b471c 100%);
+    color:#211a0c;
+    transform:rotateY(180deg);
+  }
+  .coin-face svg{width:100%;height:100%;}
+  .coin-face text{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:2px;
+    fill:currentColor;
+    opacity:0.85;
+  }
+  .coin-num{
+    font-family:'Poppins',sans-serif;font-weight:800;font-size:78px;
+  }
+  .coin-sub{
+    font-family:'Inter',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;opacity:.8;
+  }
+  .coin-hint{
+    text-align:center;margin-top:16px;
+    font-family:'Inter',sans-serif;font-weight:600;
+    font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--steel);
+  }
+
+  /* ================= MARQUEE ================= */
+  .marquee{
+    border-top:1px solid var(--line-soft);
+    border-bottom:1px solid var(--line-soft);
+    background:var(--panel);
+    padding:18px 0;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .marquee-track{
+    display:inline-flex;
+    animation:scrollx 32s linear infinite;
+  }
+  @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .marquee-item{
+    font-family:'Inter',sans-serif;font-weight:600;
+    font-size:14.5px;letter-spacing:.02em;text-transform:uppercase;
+    color:var(--steel);
+    padding:0 28px;
+    display:flex;align-items:center;gap:28px;
+  }
+  .marquee-item b{color:var(--cream);}
+  .marquee-item .dot{width:5px;height:5px;border-radius:50%;background:var(--brass-soft);}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:120px 0;position:relative;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head h2{font-size:clamp(34px,4.2vw,54px);line-height:1.05;}
+  .section-head p{color:var(--steel);font-size:17px;line-height:1.6;margin-top:18px;}
+
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  [data-reveal].in{opacity:1;transform:translateY(0);}
+
+  /* ---------- SHOW / SPEC SECTION ---------- */
+  .spec-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    border-top:1px solid var(--line);
+    margin-top:10px;
+  }
+  .spec-row{
+    padding:22px 0;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:20px;
+  }
+  .spec-row:nth-child(odd){padding-right:30px;}
+  .spec-row:nth-child(even){padding-left:30px;border-left:1px solid var(--line);}
+  .spec-label{
+    font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--steel);
+  }
+  .spec-value{font-size:16.5px;font-weight:500;text-align:right;max-width:60%;}
+
+  .guest-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:16px;margin-top:56px;
+  }
+  .card{perspective:1200px;height:190px;}
+  .card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform .65s cubic-bezier(.2,.7,.2,1);
+    cursor:pointer;
+  }
+  .card.flipped .card-inner{transform:rotateY(180deg);}
+  .card-face{
+    position:absolute;inset:0;border-radius:16px;
+    backface-visibility:hidden;
+    padding:22px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    border:1px solid var(--line);
+  }
+  .card-front{background:var(--panel);}
+  .card-front .num{font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;color:var(--brass-soft);letter-spacing:.04em;}
+  .card-front .name{font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;}
+  .card-front .tap{font-family:'Inter',sans-serif;font-weight:600;font-size:11.5px;color:var(--steel);letter-spacing:.03em;text-transform:uppercase;}
+  .card-back{
+    background:linear-gradient(155deg, var(--blue-deep), var(--blue));
+    transform:rotateY(180deg);
+    justify-content:center;
+  }
+  .card-back p{font-size:15.5px;line-height:1.4;margin:0;font-weight:500;}
+  .card:focus-visible .card-inner{outline:2px solid var(--brass-soft);outline-offset:4px;}
+
+  /* ---------- EDITORIAL BLOCK ---------- */
+  .editorial{
+    background:linear-gradient(160deg, var(--blue) 0%, var(--blue-deep) 100%);
+    color:var(--cream);
+    overflow:hidden;
+  }
+  .editorial .wrap{position:relative;z-index:2;}
+  .editorial-shapes{position:absolute;inset:0;z-index:1;opacity:.5;}
+  .editorial h2{
+    font-size:clamp(30px,4.6vw,52px);
+    line-height:1.18;
+    max-width:820px;
+    font-weight:500;
+  }
+  .editorial p.lede{
+    max-width:560px;margin-top:28px;font-size:17px;line-height:1.65;color:rgba(243,240,230,0.82);
+  }
+
+  /* ---------- BROJKE / STATS ---------- */
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:var(--line);
+    border:1px solid var(--line);
+    border-radius:20px;overflow:hidden;
+    margin-top:20px;
+  }
+  .stat{background:var(--panel);padding:48px 34px;text-align:left;}
+  .stat-value{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(40px,5vw,60px);color:var(--cream);display:flex;align-items:baseline;gap:2px;}
+  .stat-value .suffix{color:var(--blue-bright);font-size:0.55em;}
+  .stat-label{margin-top:10px;color:var(--steel);font-size:14.5px;}
+
+  /* ---------- FILM SECTION ---------- */
+  .film{
+    background:
+      radial-gradient(700px 420px at var(--mx,50%) var(--my,30%), rgba(201,162,75,0.16), transparent 60%),
+      linear-gradient(180deg, #0a0a0c 0%, #131018 100%);
+    border-top:1px solid var(--line-soft);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .film-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:start;}
+  .film h2{font-size:clamp(36px,5vw,58px);color:var(--cream);line-height:1.05;max-width:560px;}
+  .film p.lede{color:var(--steel);font-size:17px;line-height:1.65;max-width:520px;margin-top:22px;}
+  .film-list{list-style:none;margin:34px 0 0;padding:0;display:flex;flex-direction:column;gap:14px;}
+  .film-list li{display:flex;gap:12px;font-size:15px;color:var(--cream);align-items:flex-start;}
+  .film-list li::before{content:'';width:6px;height:6px;margin-top:8px;border-radius:50%;background:var(--brass-soft);flex:none;}
+  .film-cta{margin-top:36px;}
+  .btn-brass{background:var(--brass-soft);color:#211a0c;}
+  .btn-brass:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(201,162,75,0.5);}
+
+  .clap-stage{
+    background:var(--panel);border:1px solid var(--line);border-radius:20px;
+    padding:38px;text-align:center;
+  }
+  .clap-btn{
+    background:none;border:none;color:var(--cream);cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    width:100%;padding:0;
+  }
+  .clap-btn:disabled{cursor:default;}
+  .clap-icon{width:150px;height:110px;color:var(--brass-soft);}
+  .clap-top{transform-origin:8px 92px;transform:rotate(-16deg);transition:transform .3s ease;}
+  .clap-btn.clapped .clap-top{animation:clapmove .5s ease forwards;}
+  @keyframes clapmove{0%{transform:rotate(-16deg);}45%{transform:rotate(3deg);}100%{transform:rotate(0deg);}}
+  .clap-label{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--steel);}
+
+  .teaser-panel{
+    margin-top:26px;padding-top:26px;border-top:1px solid var(--line);
+    opacity:0;transform:translateY(10px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .teaser-panel.show{opacity:1;transform:translateY(0);}
+  .teaser-panel .big{font-family:'Poppins',sans-serif;font-weight:800;font-size:26px;color:var(--brass-soft);}
+  .teaser-panel p{color:var(--steel);font-size:14.5px;line-height:1.55;margin-top:10px;}
+  .teaser-panel a{color:var(--cream);text-decoration:underline;text-underline-offset:3px;}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:12px;letter-spacing:.03em;text-transform:uppercase;
+    color:var(--brass-soft);border:1px solid rgba(201,162,75,0.4);
+    padding:7px 14px;border-radius:100px;margin-bottom:22px;
+  }
+  .badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--brass-soft);animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+  /* ---------- PLATFORMS ---------- */
+  .plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:10px;}
+  .plat-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:22px;
+    padding:40px;transition:transform .3s ease, border-color .3s ease;
+    position:relative;overflow:hidden;
+  }
+  .plat-card:hover{border-color:var(--blue-bright);}
+  .plat-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .plat-icon{width:38px;height:38px;color:var(--blue-bright);}
+  .plat-card.gold .plat-icon{color:var(--brass-soft);}
+  .plat-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:25px;margin-top:20px;}
+  .plat-meta{color:var(--steel);font-size:14.5px;margin-top:8px;}
+  .plat-link{
+    margin-top:26px;display:inline-flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:600;text-decoration:none;color:var(--cream);
+    border-bottom:1px solid var(--line);padding-bottom:4px;
+  }
+  .plat-link:hover{color:var(--blue-bright);border-color:var(--blue-bright);}
+  .plat-card.gold .plat-link:hover{color:var(--brass-soft);border-color:var(--brass-soft);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line-soft);
+    padding:56px 0 40px;
+  }
+  .foot-top{
+    display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:30px;
+  }
+  .foot-links{display:flex;gap:28px;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
+  .foot-links a{text-decoration:none;color:var(--steel);font-size:14px;}
+  .foot-links a:hover{color:var(--cream);}
+  .foot-bottom{
+    margin-top:46px;padding-top:24px;border-top:1px solid var(--line-soft);
+    display:flex;justify-content:space-between;color:var(--steel);font-size:13px;flex-wrap:wrap;gap:10px;
+  }
+  .foot-tag{font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.03em;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .coin-wrap{order:-1;margin-bottom:20px;}
+    .coin{width:200px;height:200px;}
+    .spec-grid{grid-template-columns:1fr;}
+    .spec-row:nth-child(even){padding-left:0;border-left:none;}
+    .spec-row:nth-child(odd){padding-right:0;}
+    .guest-grid{grid-template-columns:repeat(2,1fr);}
+    .stats-grid{grid-template-columns:1fr;}
+    .film-grid{grid-template-columns:1fr;}
+    .plat-grid{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 22px;}
+    section{padding:84px 0;}
+    .guest-grid{grid-template-columns:1fr 1fr;gap:10px;}
+    .card{height:170px;}
+    .btn{padding:14px 20px;font-size:13.5px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div id="cursorRing"></div>
+
+<header id="siteHeader">
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="logo-coin"></span>YASSERSTAIN</a>
+    <a href="#platforme" class="nav-cta">Zaprati</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Novi Sad · od 2009. · #NemojBitiTajL1K</div>
+        <h1>MILION<br>PITANJA<br>ZA <em>500</em><br>DINARA</h1>
+        <p class="hero-sub">Kviz u kom se ne osvaja novac već <b>znanje</b>. Godinama najgledaniji format na Balkanu. A sad, dok epizode i dalje idu svake nedelje, ekipa je krenula i na <b>nešto mnogo veće</b>.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.youtube.com/@Yasserstain" target="_blank" rel="noopener">Gledaj epizode ↗</a>
+          <a class="btn btn-ghost" href="#film">Vidi šta se sprema</a>
+        </div>
+        <div class="scrollcue"><span class="line"></span>Skroluj</div>
+      </div>
+
+      <div class="coin-wrap">
+        <div>
+          <div class="coin" id="coin" tabindex="0" role="img" aria-label="Novčić Yasserstain — prevuci da okreneš">
+            <div class="coin-face coin-front">
+              <svg viewBox="0 0 300 300">
+                <path id="curveFront" d="M 150,150 m -122,0 a 122,122 0 1,1 244,0 a 122,122 0 1,1 -244,0" fill="none"/>
+                <text><textPath href="#curveFront" startOffset="0%">MILION · PITANJA · ZA 500 DINARA · MILION · PITANJA · ZA 500 DINARA ·</textPath></text>
+              </svg>
+              <div style="position:absolute;display:flex;flex-direction:column;align-items:center;">
+                <span class="coin-num">500</span>
+                <span class="coin-sub">DINARA</span>
+              </div>
+            </div>
+            <div class="coin-face coin-back">
+              <svg viewBox="0 0 300 300">
+                <path id="curveBack" d="M 150,150 m -122,0 a 122,122 0 1,1 244,0 a 122,122 0 1,1 -244,0" fill="none"/>
+                <text><textPath href="#curveBack" startOffset="0%">PETLJA · FILM · AUDICIJA U TOKU · PETLJA · FILM ·</textPath></text>
+              </svg>
+              <div style="position:absolute;display:flex;flex-direction:column;align-items:center;">
+                <svg width="72" height="54" viewBox="0 0 72 54" fill="none" style="margin-bottom:8px;">
+                  <rect x="4" y="18" width="64" height="32" rx="4" stroke="#211a0c" stroke-width="3"/>
+                  <rect x="4" y="4" width="64" height="14" rx="3" stroke="#211a0c" stroke-width="3" fill="#211a0c"/>
+                </svg>
+                <span class="coin-sub">FILM</span>
+              </div>
+            </div>
+          </div>
+          <div class="coin-hint">Prevuci novčić →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MARQUEE ================= -->
+  <div class="marquee">
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="marquee-item"><b>850K+</b> pretplatnika<span class="dot"></span><b>227K+</b> na Instagramu<span class="dot"></span>od 2009. godine<span class="dot"></span>stotine epizoda<span class="dot"></span>novi film u pripremi<span class="dot"></span></div>
+      <div class="marquee-item"><b>850K+</b> pretplatnika<span class="dot"></span><b>227K+</b> na Instagramu<span class="dot"></span>od 2009. godine<span class="dot"></span>stotine epizoda<span class="dot"></span>novi film u pripremi<span class="dot"></span></div>
+      <div class="marquee-item"><b>850K+</b> pretplatnika<span class="dot"></span><b>227K+</b> na Instagramu<span class="dot"></span>od 2009. godine<span class="dot"></span>stotine epizoda<span class="dot"></span>novi film u pripremi<span class="dot"></span></div>
+      <div class="marquee-item"><b>850K+</b> pretplatnika<span class="dot"></span><b>227K+</b> na Instagramu<span class="dot"></span>od 2009. godine<span class="dot"></span>stotine epizoda<span class="dot"></span>novi film u pripremi<span class="dot"></span></div>
+    </div>
+  </div>
+
+  <!-- ================= SHOW / SPEC ================= -->
+  <section id="emisija">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div class="eyebrow">Format · 500 din</div>
+        <h2>Kako funkcioniše naš kviz</h2>
+        <p>Pravila su jednostavna, pitanja nisu. Svake nedelje u kadar sednu influenseri, tiktokerke, glumice, ponekad i stara ekipa i odgovaraju na pitanja o sebi, jedni o drugima, o svemu. Nagrada je simbolična.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EDITORIAL ================= -->
+  <section class="editorial">
+    <svg class="editorial-shapes" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+      <circle cx="1040" cy="120" r="220" fill="rgba(243,240,230,0.06)"/>
+      <circle cx="120" cy="520" r="160" fill="rgba(10,10,12,0.18)"/>
+      <rect x="600" y="380" width="260" height="260" rx="40" fill="rgba(243,240,230,0.05)" transform="rotate(18 730 510)"/>
+    </svg>
+    <div class="wrap" data-reveal>
+      <div class="eyebrow" style="color:var(--brass-soft);">Zajednica</div>
+      <h2>Sedamnaest godina pred kamerom nauči jednu stvar</h2>
+      <p class="lede">Yasserstain nije samo emisija ili kanal, to je zajednica koja se gradi otkad su ekipa i gledaoci bili tinejdžeri, kroz skečeve, pesme, kvizove i iskrene razgovore o odrastanju. Danas to gleda cela regija, generacija koja je odrasla uz #NemojBitiTajL1K.</p>
+    </div>
+  </section>
+
+  <!-- ================= BROJKE ================= -->
+  <section id="brojke">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div class="eyebrow">Brojke</div>
+        <h2>Publika koja se broji u stotinama hiljada</h2>
+      </div>
+      <div class="stats-grid" data-reveal>
+        <div class="stat">
+          <div class="stat-value"><span class="num" data-target="850">0</span><span class="suffix">K+</span></div>
+          <div class="stat-label">pretplatnika na YouTube-u</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value"><span class="num" data-target="227">0</span><span class="suffix">K+</span></div>
+          <div class="stat-label">pratilaca na Instagramu</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value"><span class="num" data-target="17">0</span><span class="suffix"></span></div>
+          <div class="stat-label">godina na sceni, od 2009.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FILM ================= -->
+  <section class="film" id="film">
+    <div class="wrap film-grid">
+      <div data-reveal>
+        <div class="badge"><span class="pulse"></span>Audicija u toku</div>
+        <h2>Film je u pripremi.</h2>
+        <ul class="film-list">
+          <li>Otvorene audicije za nove uloge</li>
+          <li>Priča pisana od ekipe koja zna svoju publiku</li>
+        </ul>
+        <div class="film-cta">
+          <a class="btn btn-brass" href="https://www.instagram.com/yasser_stain/" target="_blank" rel="noopener">Prijavi se za audiciju ↗</a>
+        </div>
+      </div>
+
+      <div class="clap-stage" data-reveal>
+        <button class="clap-btn" id="clapBtn" aria-expanded="false">
+          <svg class="clap-icon" viewBox="0 0 150 110" fill="none">
+            <rect x="8" y="34" width="134" height="68" rx="8" stroke="currentColor" stroke-width="4"/>
+            <line x1="8" y1="68" x2="142" y2="68" stroke="currentColor" stroke-width="3" stroke-dasharray="10 8"/>
+            <g class="clap-top">
+              <rect x="8" y="6" width="134" height="26" rx="6" fill="currentColor"/>
+              <rect x="20" y="6" width="16" height="26" fill="#0a0a0c"/>
+              <rect x="52" y="6" width="16" height="26" fill="#0a0a0c"/>
+              <rect x="84" y="6" width="16" height="26" fill="#0a0a0c"/>
+              <rect x="116" y="6" width="16" height="26" fill="#0a0a0c"/>
+              <circle cx="12" cy="30" r="5" fill="#0a0a0c"/>
+            </g>
+          </svg>
+          <span class="clap-label">Klikni za klapu</span>
+        </button>
+
+        <div class="teaser-panel" id="teaserPanel" hidden>
+          <div class="big">Uskoro.</div>
+          <p>Datum premijere još čuvamo za sebe. Audicije za nove uloge primamo preko Instagrama, prijave i najave iza kulisa stižu tamo prve. <a href="https://www.instagram.com/yasser_stain/" target="_blank" rel="noopener">Prati @yasser_stain ↗</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PLATFORME ================= -->
+  <section id="platforme">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div class="eyebrow">Platforme</div>
+        <h2>Gde nas pratiti</h2>
+      </div>
+      <div class="plat-grid" data-reveal>
+        <a class="plat-card" href="https://www.youtube.com/@Yasserstain" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+          <div class="plat-top">
+            <svg class="plat-icon" viewBox="0 0 24 24" fill="none"><path d="M23 12s0-3.6-.46-5.3a2.9 2.9 0 0 0-2-2C18.9 4 12 4 12 4s-6.9 0-8.54.7a2.9 2.9 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.46 5.3a2.9 2.9 0 0 0 2 2C5.1 20 12 20 12 20s6.9 0 8.54-.7a2.9 2.9 0 0 0 2-2C23 15.6 23 12 23 12Z" stroke="currentColor" stroke-width="1.6"/><path d="M9.7 15.5V8.5L15.8 12l-6.1 3.5Z" fill="currentColor"/></svg>
+          </div>
+          <div class="plat-name">YouTube</div>
+          <div class="plat-meta">850K+ pretplatnika · skečevi, kviz, spotovi</div>
+          <span class="plat-link">Otvori kanal ↗</span>
+        </a>
+        <a class="plat-card gold" href="https://www.instagram.com/yasser_stain/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+          <div class="plat-top">
+            <svg class="plat-icon" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></svg>
+          </div>
+          <div class="plat-name">Instagram</div>
+          <div class="plat-meta">227K+ pratilaca · iza kulisa, najave, audicije</div>
+          <span class="plat-link">Otvori profil ↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#top" class="logo"><span class="logo-coin"></span>YASSERSTAIN</a>
+      <ul class="foot-links">
+        <li><a href="#emisija">Emisija</a></li>
+        <li><a href="#film">Film</a></li>
+        <li><a href="https://yasserstainshop.com" target="_blank" rel="noopener">Shop</a></li>
+        <li><a href="https://www.instagram.com/yasser_stain/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.youtube.com/@Yasserstain" target="_blank" rel="noopener">YouTube</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-tag">#NemojBitiTajL1K</span>
+      <span>© 2026 Yasserstain</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pointerFine = window.matchMedia('(pointer: fine)').matches;
+
+  /* ---- nav scroll state ---- */
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 30);
+  }, {passive:true});
+
+  /* ---- custom cursor ---- */
+  if(pointerFine){
+    document.body.classList.add('cursor-ready');
+    var ring = document.getElementById('cursorRing');
+    window.addEventListener('mousemove', function(e){
+      ring.style.transform = 'translate('+e.clientX+'px,'+e.clientY+'px)';
+    });
+    document.querySelectorAll('a, button, .card, .coin').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ ring.classList.add('grow'); });
+      el.addEventListener('mouseleave', function(){ ring.classList.remove('grow'); });
+    });
+  }
+
+  /* ---- scroll reveal ---- */
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.14});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- counters ---- */
+  var counted = false;
+  var statsSection = document.getElementById('brojke');
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var start = performance.now();
+    var dur = 1400;
+    function step(now){
+      var p = Math.min((now-start)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(eased * target);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if(statsSection){
+    var statsIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !counted){
+          counted = true;
+          statsSection.querySelectorAll('.num').forEach(animateCount);
+        }
+      });
+    }, {threshold:0.3});
+    statsIO.observe(statsSection);
+  }
+
+  /* ---- flip cards ---- */
+  document.querySelectorAll('.card').forEach(function(card){
+    function toggle(){ card.classList.toggle('flipped'); }
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---- clapperboard reveal ---- */
+  var clapBtn = document.getElementById('clapBtn');
+  var teaser = document.getElementById('teaserPanel');
+  clapBtn.addEventListener('click', function(){
+    if(clapBtn.disabled) return;
+    clapBtn.classList.add('clapped');
+    clapBtn.setAttribute('aria-expanded','true');
+    clapBtn.disabled = true;
+    setTimeout(function(){
+      teaser.hidden = false;
+      requestAnimationFrame(function(){ teaser.classList.add('show'); });
+    }, reduced ? 0 : 260);
+  });
+
+  /* ---- film spotlight ---- */
+  var film = document.getElementById('film');
+  if(pointerFine){
+    film.addEventListener('mousemove', function(e){
+      var r = film.getBoundingClientRect();
+      film.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      film.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  }
+
+  /* ---- coin drag / spin ---- */
+  var coin = document.getElementById('coin');
+  var rotY = 0, velocity = 0, dragging = false, lastX = 0, lastTime = 0;
+
+  function render(){
+    coin.style.transform = 'rotateX(-12deg) rotateY(' + rotY + 'deg)';
+  }
+
+  function pointerDown(e){
+    dragging = true;
+    lastX = e.clientX;
+    lastTime = performance.now();
+    coin.setPointerCapture && e.pointerId != null && coin.setPointerCapture(e.pointerId);
+  }
+  function pointerMove(e){
+    if(!dragging) return;
+    var now = performance.now();
+    var dx = e.clientX - lastX;
+    var dt = Math.max(now - lastTime, 1);
+    velocity = (dx / dt) * 16;
+    rotY += dx * 0.6;
+    lastX = e.clientX;
+    lastTime = now;
+    render();
+  }
+  function pointerUp(){ dragging = false; }
+
+  coin.addEventListener('pointerdown', pointerDown);
+  window.addEventListener('pointermove', pointerMove);
+  window.addEventListener('pointerup', pointerUp);
+  coin.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ rotY -= 18; render(); }
+    if(e.key === 'ArrowRight'){ rotY += 18; render(); }
+  });
+
+  function tick(){
+    if(!dragging){
+      if(Math.abs(velocity) > 0.02){
+        rotY += velocity;
+        velocity *= 0.96;
+        render();
+      } else if(!reduced){
+        rotY += 0.06;
+        render();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  render();
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
