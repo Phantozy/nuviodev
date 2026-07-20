@@ -1,700 +1,1149 @@
 <!DOCTYPE html>
-<html lang="sr" data-lang="sr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuvio Development | Izrada Web Sajtova i Mobilnih Aplikacija</title>
+<title>Nuvio Development</title>
+<meta name="description" content="Nuvio Development designs and builds digital products for teams who refuse to compromise.">
+<style>
+  :root{
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --ink: #1d1d1f;
+    --ink-soft: #6e6e73;
+    --line: #d2d2d7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    --container: 1120px;
+  }
 
-<!-- ═══════════════════════════════════════════
-     SEO — replace nuviodev.com with real URL
-     ═══════════════════════════════════════════ -->
+  *{ box-sizing: border-box; margin:0; padding:0; }
 
-<!-- Core SEO -->
-<meta name="description" content="Nuvio Development: profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi i moderni sajtovi od 400€. Besplatna procena! ☎ +381 65 638 2930">
-<meta name="keywords" content="izrada web sajta, izrada web sajtova, web dizajn Srbija, mobilne aplikacije Srbija, web development Srbija, izrada sajta Beograd, web programiranje Srbija, React Next.js developer Srbija, mobilna aplikacija iOS Android Srbija, izrada sajta cena">
-<meta name="author" content="Nuvio Development">
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="theme-color" content="#0d0d14">
-<meta name="format-detection" content="telephone=yes, address=yes">
+  html{ scroll-behavior: smooth; }
 
-<!-- Geo targeting — Serbia -->
-<meta name="geo.region" content="RS">
-<meta name="geo.country" content="Serbia">
-<meta name="geo.placename" content="Srbija">
-<meta name="ICBM" content="44.0165, 21.0059">
+  body{
+    font-family: var(--font-text);
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
 
-<!-- Canonical & hreflang -->
-<link rel="canonical" href="https://nuviodev.com/">
-<link rel="alternate" hreflang="sr" href="https://nuviodev.com/">
-<link rel="alternate" hreflang="x-default" href="https://nuviodev.com/">
+  img, canvas{ display:block; max-width:100%; }
 
-<!-- Open Graph (Facebook, LinkedIn, Viber previews) -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nuviodev.com/">
-<meta property="og:title" content="Nuvio Development | Izrada Web Sajtova i Aplikacija u Srbiji">
-<meta property="og:description" content="Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi sajtovi koji se dobro rangiraju. Besplatna procena!">
-<meta property="og:image" content="https://nuviodev.com/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Nuvio Development — Izrada Web Sajtova i Mobilnih Aplikacija">
-<meta property="og:locale" content="sr_RS">
-<meta property="og:site_name" content="Nuvio Development">
+  a{ color: inherit; text-decoration: none; }
 
-<!-- Twitter / X Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nuvio Development | Izrada Web Sajtova i Aplikacija u Srbiji">
-<meta name="twitter:description" content="Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi sajtovi koji se dobro rangiraju.">
-<meta name="twitter:image" content="https://nuviodev.com/og-image.jpg">
+  .container{
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  /* ---------- NAV ---------- */
+  .nav{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0);
+    border-bottom: 1px solid rgba(210,210,215,0);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transition: background 0.4s ease, border-color 0.4s ease;
+  }
+  .nav.scrolled{
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: var(--container);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo{
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .nav-links{
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a{
+    font-size: 12px;
+    color: var(--ink);
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+  .nav-links a:hover{ opacity: 1; }
+  .nav-cta{
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--ink);
+    color: #fff;
+    padding: 7px 16px;
+    border-radius: 980px;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-cta:hover{ background: #000; }
+  .nav-menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding: 8px;
+  }
+  .nav-menu-btn span{
+    display:block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--ink);
+    margin: 4px 0;
+  }
 
-<!-- Schema.org Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://nuviodev.com/#organization",
-      "name": "Nuvio Development",
-      "url": "https://nuviodev.com/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://nuviodev.com/logo.png"
-      },
-      "description": "Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani, brzi i moderni sajtovi visokih performansi.",
-      "email": "nuvio.devgroup@gmail.com",
-      "telephone": "+381656382930",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Beograd",
-        "addressCountry": "RS",
-        "addressRegion": "Srbija"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Serbia"
-      },
-      "priceRange": "€€",
-      "foundingDate": "2020",
-      "numberOfEmployees": {
-        "@type": "QuantitativeValue",
-        "value": "5"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://nuviodev.com/#website",
-      "url": "https://nuviodev.com/",
-      "name": "Nuvio Development",
-      "inLanguage": "sr-RS",
-      "publisher": { "@id": "https://nuviodev.com/#organization" }
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://nuviodev.com/#localbusiness",
-      "name": "Nuvio Development",
-      "url": "https://nuviodev.com/",
-      "image": "https://nuviodev.com/og-image.jpg",
-      "telephone": "+381656382930",
-      "email": "nuvio.devgroup@gmail.com",
-      "priceRange": "€€",
-      "description": "Profesionalna izrada web sajtova i mobilnih aplikacija u Srbiji. Ručno kodirani sajtovi koji se brzo učitavaju i dobro rangiraju na Googleu.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Beograd",
-        "addressCountry": "RS",
-        "addressRegion": "Srbija"
-      },
-      "areaServed": [
-        { "@type": "City", "name": "Beograd" },
-        { "@type": "City", "name": "Novi Sad" },
-        { "@type": "City", "name": "Niš" },
-        { "@type": "Country", "name": "Serbia" }
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Web i Mobilne Usluge",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Izrada Web Sajtova",
-              "description": "Ručno kodirana web rešenja visokih performansi bez WordPress šablona"
-            },
-            "priceSpecification": {
-              "@type": "PriceSpecification",
-              "minPrice": "400",
-              "priceCurrency": "EUR"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Mobilne Aplikacije",
-              "description": "Nativne i cross-platform mobilne aplikacije za iOS i Android"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "UI/UX Dizajn",
-              "description": "Profesionalni dizajn u Figma: wireframe, prototip i finalni dizajn"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "SEO i Performanse",
-              "description": "Tehnička SEO optimizacija za bolji Google ranking i Core Web Vitals"
-            }
-          }
-        ]
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "reviewCount": "50",
-        "bestRating": "5"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Koliko košta izrada web sajta?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 400€, dok kompleksne web aplikacije mogu biti i 2000€+. Nakon razgovora dajemo besplatnu procenu."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koliko traje izrada web sajta?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Da li pružate podršku nakon lansiranja?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Da li mogu da vidim sajt pre lansiranja?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Radite li mobilne aplikacije za iOS i Android?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat."
-          }
-        }
-      ]
-    }
-  ]
-}
-</script>
+  /* ---------- HERO SCRUB ---------- */
+  .hero-scrub{
+    position: relative;
+    height: 480vh;
+  }
+  .hero-sticky{
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: #e9e9eb;
+  }
+  #heroCanvas{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-scrim{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.12) 100%);
+    pointer-events: none;
+  }
+  .hero-content{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+    will-change: opacity, transform;
+  }
+  .hero-eyebrow{
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero-title{
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 7vw, 5.75rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .hero-sub{
+    margin-top: 22px;
+    font-size: clamp(1.05rem, 2vw, 1.375rem);
+    font-weight: 400;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 1.5;
+  }
+  .hero-scrolldown{
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-soft);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    will-change: opacity;
+  }
+  .hero-scrolldown svg{ animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(5px); }
+  }
 
-<!-- ═══════════════════════════════════════════ -->
+  /* ---------- HERO SCROLL CAPTIONS ---------- */
+  .hero-caption{
+    position: absolute;
+    max-width: 240px;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+  .cap-index{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(29,29,31,0.55);
+    margin-bottom: 10px;
+  }
+  .cap-text{
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .cap-tl{ top: 16%; left: 6%; text-align: left; }
+  .cap-mr{ top: 50%; right: 6%; text-align: right; margin-top: -46px; }
+  .cap-bl{ bottom: 18%; left: 6%; text-align: left; }
+  .cap-br{ bottom: 16%; right: 6%; text-align: right; }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  @media (max-width: 860px){
+    .hero-caption{ display: none; }
+  }
+
+  /* ---------- SECTIONS (generic) ---------- */
+  section{
+    padding: 140px 0;
+  }
+  .section-alt{ background: var(--bg-alt); }
+
+  .eyebrow{
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .heading{
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--ink);
+  }
+  .lede{
+    text-align: center;
+    max-width: 640px;
+    margin: 20px auto 0;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(.2,.8,.2,1), transform 0.8s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.in{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- INTRO STATEMENT ---------- */
+  .statement{
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .statement span{ color: var(--ink-soft); }
+
+  /* ---------- STATS ---------- */
+  .stats-grid{
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .stat{
+    text-align: center;
+    padding: 0 12px;
+  }
+  .stat-num{
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label{
+    margin-top: 8px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .service-card{
+    background: var(--bg-alt);
+    border-radius: 22px;
+    padding: 44px 32px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .service-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.08);
+  }
+  .service-icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .service-icon svg{ width: 22px; height: 22px; stroke: #fff; }
+  .service-title{
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .service-desc{
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ---------- QUOTE ---------- */
+  .quote-wrap{
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .quote-mark{
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  blockquote{
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .quote-attr{
+    margin-top: 28px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .quote-attr strong{ color: var(--ink); font-weight: 600; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    text-align: center;
+  }
+  .cta-buttons{
+    margin-top: 32px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display: inline-block;
+    padding: 13px 28px;
+    border-radius: 980px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .btn-primary{
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover{ background: var(--accent-hover); }
+  .btn-secondary{
+    color: var(--accent);
+  }
+  .btn-secondary:hover{ text-decoration: underline; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--bg-alt);
+    border-top: 1px solid var(--line);
+    padding: 48px 0 28px;
+  }
+  .footer-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-logo{
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .footer-links{
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .footer-links a{
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .footer-links a:hover{ color: var(--ink); }
+  .footer-bottom{
+    padding-top: 20px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    .stats-grid{ grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+    .services-grid{ grid-template-columns: 1fr; }
+    section{ padding: 100px 0; }
+  }
+  @media (max-width: 700px){
+    .nav-links{ display: none; }
+    .nav-cta{ display: none; }
+    .hero-scrub{ height: 380vh; }
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-band{
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .marquee-track{
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee-track span{
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+  .marquee-track span::after{
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--line);
+    display: inline-block;
+    margin: 0 28px;
+  }
+  @keyframes marquee{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation: none; }
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process-list{
+    position: relative;
+    max-width: 640px;
+    margin: 64px auto 0;
+    padding-left: 76px;
+  }
+  .process-rail{
+    position: absolute;
+    left: 27px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line);
+  }
+  .process-rail-fill{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 0%;
+    background: var(--accent);
+  }
+  .process-step{
+    position: relative;
+    padding-bottom: 52px;
+  }
+  .process-step:last-child{ padding-bottom: 0; }
+  .process-num{
+    position: absolute;
+    left: -76px;
+    top: -4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    z-index: 2;
+    transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+  .process-step.active .process-num{
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  .process-title{
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .process-desc{
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 460px;
+  }
+
+  /* ---------- WORK ---------- */
+  .work-filters{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .work-filter-btn{
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: var(--bg-alt);
+    border: 1px solid transparent;
+    padding: 8px 18px;
+    border-radius: 980px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .work-filter-btn:hover{ color: var(--ink); }
+  .work-filter-btn.active{
+    background: var(--ink);
+    color: #fff;
+  }
+  .work-grid{
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .work-card{
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--bg-alt);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .work-card.hide{
+    display: none;
+  }
+  .work-swatch{
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-swatch::before{
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: var(--swatch, linear-gradient(135deg, #d2d2d7, #f5f5f7));
+    transition: transform 0.5s ease;
+  }
+  .work-card:hover .work-swatch::before{ transform: scale(1.08) rotate(2deg); }
+  .work-body{ padding: 24px 24px 28px; }
+  .work-cat{
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .work-name{
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .work-desc{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-list{
+    max-width: 720px;
+    margin: 56px auto 0;
+  }
+  .faq-item{
+    border-bottom: 1px solid var(--line);
+  }
+  .faq-q{
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 24px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .faq-icon{
+    flex: none;
+    width: 20px;
+    height: 20px;
+    position: relative;
+  }
+  .faq-icon::before, .faq-icon::after{
+    content: '';
+    position: absolute;
+    background: var(--ink-soft);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .faq-icon::before{ width: 12px; height: 1.5px; }
+  .faq-icon::after{ width: 1.5px; height: 12px; }
+  .faq-item.open .faq-icon::after{ transform: translate(-50%,-50%) rotate(90deg); opacity: 0; }
+  .faq-a{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .faq-a-inner{
+    padding: 0 4px 24px;
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 620px;
+  }
+
+  /* ---------- CONTACT FORM ---------- */
+  .contact-wrap{
+    max-width: 560px;
+    margin: 40px auto 0;
+    text-align: left;
+  }
+  .form-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .field{
+    margin-bottom: 16px;
+  }
+  .field label{
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .field input, .field select, .field textarea{
+    width: 100%;
+    font-family: var(--font-text);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--bg-alt);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+  }
+  .field textarea{ resize: vertical; min-height: 96px; }
+  .field.error input, .field.error textarea{ border-color: #d70015; }
+  .field-error-msg{
+    font-size: 0.78rem;
+    color: #d70015;
+    margin-top: 5px;
+    display: none;
+  }
+  .field.error .field-error-msg{ display: block; }
+  .form-submit-row{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .form-note{
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .contact-success{
+    display: none;
+    text-align: center;
+    padding: 36px 24px;
+    background: var(--bg-alt);
+    border-radius: 20px;
+  }
+  .contact-success.show{ display: block; }
+  .contact-success-icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .contact-success h3{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .contact-success p{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 900px){
+    .work-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px){
+    .form-row{ grid-template-columns: 1fr; }
+    .process-list{ padding-left: 64px; }
+    .process-num{ left: -64px; width: 34px; height: 34px; }
+  }
+  @media (max-width: 600px){
+    .work-grid{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .reveal{ opacity: 1; transform: none; transition: none; }
+    .hero-scrolldown svg{ animation: none; }
+  }
+</style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cur"></div>
-<div id="cur-ring"></div>
-
-<!-- PROGRESS BAR -->
-<div id="progress"></div>
-
-<!-- ORBS -->
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo">
-    Nuvio<span>Development</span><div class="logo-dot"></div>
-  </a>
-  <div class="nav-links">
-    <a href="#services" data-sr="Usluge" data-en="Services">Usluge</a>
-    <a href="#process" data-sr="Proces" data-en="Process">Proces</a>
-    <a href="#projects" data-sr="Projekti" data-en="Projects">Projekti</a>
-    <a href="#tech" data-sr="Tech" data-en="Tech">Tech</a>
-    <a href="#faq" data-sr="FAQ" data-en="FAQ">FAQ</a>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Nuvio</a>
+    <ul class="nav-links">
+      <li><a href="#services">Design</a></li>
+      <li><a href="#services">Engineering</a></li>
+      <li><a href="#stats">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:hello@nuvio.dev" class="nav-cta">Get in touch</a>
   </div>
-  <div style="display:flex;align-items:center;gap:1rem">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-sr" aria-label="Srpski" title="Srpski"></button>
-      <button class="lang-btn" id="btn-en" aria-label="English" title="English"></button>
-    </div>
-    <a href="#contact" class="nav-cta" data-sr="Kontaktiraj nas" data-en="Contact Us">Kontaktiraj nas</a>
-  </div>
-  <button class="hamburger" id="ham" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobile-nav">
-  <a href="#services" data-sr="Usluge" data-en="Services">Usluge</a>
-  <a href="#process" data-sr="Proces" data-en="Process">Proces</a>
-  <a href="#projects" data-sr="Projekti" data-en="Projects">Projekti</a>
-  <a href="#tech" data-sr="Tech" data-en="Tech">Tech</a>
-  <a href="#faq" data-sr="FAQ" data-en="FAQ">FAQ</a>
-  <a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a>
-</div>
+<main>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-badge">
-    <div class="hero-badge-dot"></div>
-    <span data-sr="🚀 Dostupni za nove projekte" data-en="🚀 Available for new projects">🚀 Dostupni za nove projekte</span>
-  </div>
-  <h1 class="hero-title">
-    <span class="line" data-sr="Kreiramo" data-en="We create">Kreiramo</span>
-    <span class="line"><span class="accent-fill" data-sr="web stranice" data-en="websites">web stranice</span></span>
-    <span class="line" data-sr="i mobilne aplikacije" data-en="and mobile apps">i <span class="accent-word">mobilne aplikacije</span></span>
-  </h1>
-  <p class="hero-sub" data-sr="Ručno kodirana, brza i moderna web i mobilna rešenja koja privlače korisnike i donose konkretne poslovne rezultate." data-en="Hand-coded, fast and modern web and mobile solutions that attract users and deliver real business results.">
-    Ručno kodirana, brza i moderna web i mobilna rešenja koja privlače korisnike i donose konkretne poslovne rezultate.
-  </p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-primary" data-sr="Pokreni projekat →" data-en="Start a Project →">Pokreni projekat →</a>
-    <a href="#projects" class="btn-secondary" data-sr="Pogledaj radove" data-en="View Our Work">Pogledaj radove</a>
-  </div>
+  <!-- HERO -->
+  <section class="hero-scrub" id="heroScrub">
+    <div class="hero-sticky">
+      <canvas id="heroCanvas"></canvas>
+      <div class="hero-scrim"></div>
+      <div class="hero-content" id="heroContent">
+        <div class="hero-eyebrow">Nuvio Development</div>
+        <h1 class="hero-title">Software.<br>Engineered right.</h1>
+        <p class="hero-sub">We design and build digital products for teams who refuse to compromise.</p>
+      </div>
+      <div class="hero-scrolldown" id="scrollCue">
+        <span>Scroll</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
 
-  <div class="hero-devices">
-    <div class="device device-desktop">
-      <div class="device-screen">
-        <div class="device-bar">
-          <div class="device-dot" style="background:#ff5f57"></div>
-          <div class="device-dot" style="background:#ffbd2e"></div>
-          <div class="device-dot" style="background:#28ca41"></div>
+      <div class="hero-caption cap-tl" data-start="0.16" data-end="0.38" data-dy="46" data-dx="-16">
+        <div class="cap-index">Plan</div>
+        <div class="cap-text">We create plans only our team can bring to life.</div>
+      </div>
+      <div class="hero-caption cap-mr" data-start="0.36" data-end="0.58" data-dy="-40" data-dx="18">
+        <div class="cap-index">Design</div>
+        <div class="cap-text">We design every detail. Every section. Every pixel.</div>
+      </div>
+      <div class="hero-caption cap-bl" data-start="0.56" data-end="0.78" data-dy="40" data-dx="-16">
+        <div class="cap-index">Engineer</div>
+        <div class="cap-text">Engineered by our team with uncompromising precision.</div>
+      </div>
+      <div class="hero-caption cap-br" data-start="0.76" data-end="0.97" data-dy="-46" data-dx="16">
+        <div class="cap-index">Launch</div>
+        <div class="cap-text">We launch every project with style.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section>
+    <div class="container">
+      <div class="eyebrow reveal">Our approach</div>
+      <p class="statement reveal">Good software disappears into the background of people's lives.
+        <span>That's what we build toward, on every project, for every team.</span></p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section-alt" id="stats">
+    <div class="container">
+      <div class="eyebrow reveal">By the numbers</div>
+      <h2 class="heading reveal">Years of experience.</h2>
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Projects</div>
         </div>
-        <div class="code-lines">
-          <div class="code-line"><span style="color:#ff6584">const</span> <span style="color:#43e97b">app</span> = <span style="color:#6c63ff">Nuvio</span>();</div>
-          <div class="code-line">app.<span style="color:#43e97b">launch</span>(<span style="color:#ff6584">'web'</span>);</div>
-          <div class="code-line"><span style="color:#6c63ff">deploy</span>(<span style="color:#43e97b">performance</span>: 100);</div>
-          <div class="code-line" style="color:rgba(108,99,255,.5)">// 🚀 Site is live!</div>
-          <div class="code-line"><span style="color:#ff6584">mobile</span>.<span style="color:#43e97b">build</span>(<span style="color:#6c63ff">iOS</span>, <span style="color:#6c63ff">Android</span>);</div>
+        <div class="stat reveal">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Years building software</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num">100+</div>
+            <div class="stat-label">Ideas Brought to Life</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num">99.9%</div>
+          <div class="stat-label">Platform uptime</div>
         </div>
       </div>
     </div>
-    <div class="device device-phone">
-      <div class="device-screen phone-screen">
-        <div class="phone-notch"></div>
-        <div class="phone-ui-block" style="margin-top:8px"></div>
-        <div class="phone-ui-block sm"></div>
-        <div class="phone-ui-img"></div>
-        <div class="phone-ui-block" style="width:80%;height:6px;background:rgba(255,77,125,.2)"></div>
-        <div class="phone-ui-block sm" style="background:rgba(108,99,255,.2)"></div>
-      </div>
-    </div>
-  </div>
+  </section>
 
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span data-sr="Skroluj" data-en="Scroll">Skroluj</span>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track" id="marquee-track">
-    <div class="marquee-item"><span class="marquee-icon">🌐</span> Web Development</div>
-    <div class="marquee-item"><span class="marquee-icon">📱</span> Mobile Apps</div>
-    <div class="marquee-item"><span class="marquee-icon">🎨</span> UI/UX Design</div>
-    <div class="marquee-item"><span class="marquee-icon">⚡</span> Performance</div>
-    <div class="marquee-item"><span class="marquee-icon">🔍</span> SEO Optimization</div>
-    <div class="marquee-item"><span class="marquee-icon">🤖</span> AI Integration</div>
-    <div class="marquee-item"><span class="marquee-icon">🛡️</span> Security</div>
-    <div class="marquee-item"><span class="marquee-icon">☁️</span> Cloud Hosting</div>
-    <div class="marquee-item"><span class="marquee-icon">🌐</span> Web Development</div>
-    <div class="marquee-item"><span class="marquee-icon">📱</span> Mobile Apps</div>
-    <div class="marquee-item"><span class="marquee-icon">🎨</span> UI/UX Design</div>
-    <div class="marquee-item"><span class="marquee-icon">⚡</span> Performance</div>
-    <div class="marquee-item"><span class="marquee-icon">🔍</span> SEO Optimization</div>
-    <div class="marquee-item"><span class="marquee-icon">🤖</span> AI Integration</div>
-    <div class="marquee-item"><span class="marquee-icon">🛡️</span> Security</div>
-    <div class="marquee-item"><span class="marquee-icon">☁️</span> Cloud Hosting</div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-label" data-sr="Šta radimo" data-en="What We Do">Šta radimo</div>
-  <h2 class="section-title reveal" data-sr="Usluge koje<br>nose rezultate" data-en="Services that<br>deliver results">Usluge koje<br>nose rezultate</h2>
-  <p class="section-desc reveal" data-sr="Od ideje do lansiranja, pokrivamo svaki aspekt digitalnog razvoja." data-en="From idea to launch, we cover every aspect of digital development.">Od ideje do lansiranja, pokrivamo svaki aspekt digitalnog razvoja.</p>
-  <div class="services-grid">
-    <div class="service-card reveal" onmousemove="cardGlow(event,this)">
-      <div class="service-icon web">🌐</div>
-      <h3 data-sr="Izrada Web Sajtova" data-en="Website Development">Izrada Web Sajtova</h3>
-      <p data-sr="Ručno kodirana web rešenja visokih performansi. Bez WordPress šablona: čist, optimizovan kod koji se brzo učitava i dobro rangira." data-en="Hand-coded high-performance web solutions. No WordPress templates: clean, optimized code that loads fast and ranks well.">Ručno kodirana web rešenja visokih performansi. Bez WordPress šablona: čist, optimizovan kod koji se brzo učitava i dobro rangira.</p>
-      <div class="service-tag">HTML · CSS · React · Next.js</div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.1s" onmousemove="cardGlow(event,this)">
-      <div class="service-icon mobile">📱</div>
-      <h3 data-sr="Mobilne Aplikacije" data-en="Mobile Applications">Mobilne Aplikacije</h3>
-      <p data-sr="Nativne i cross-platform mobilne aplikacije za iOS i Android. Intuitivni UI, glatke animacije i vrhunske performanse na svakom uređaju." data-en="Native and cross-platform mobile apps for iOS & Android. Intuitive UI, smooth animations and top performance on every device.">Nativne i cross-platform mobilne aplikacije za iOS i Android. Intuitivni UI, glatke animacije i vrhunske performanse na svakom uređaju.</p>
-      <div class="service-tag" style="color:var(--accent3);background:rgba(0,245,160,.08);border-color:rgba(0,245,160,.2)">React Native · Flutter · Swift</div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.2s" onmousemove="cardGlow(event,this)">
-      <div class="service-icon design">🎨</div>
-      <h3 data-sr="UI/UX Dizajn" data-en="UI/UX Design">UI/UX Dizajn</h3>
-      <p data-sr="Dizajn koji privlači i zadržava korisnike. Wireframe, prototip i finalni dizajn u Figma, spreman za implementaciju." data-en="Design that attracts and retains users. Wireframe, prototype and final design in Figma, ready for implementation.">Dizajn koji privlači i zadržava korisnike. Wireframe, prototip i finalni dizajn u Figma, spreman za implementaciju.</p>
-      <div class="service-tag" style="color:var(--accent2);background:rgba(255,77,125,.08);border-color:rgba(255,77,125,.2)">Figma · Prototyping · Branding</div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.3s" onmousemove="cardGlow(event,this)">
-      <div class="service-icon seo">🔍</div>
-      <h3 data-sr="SEO & Performanse" data-en="SEO & Performance">SEO & Performanse</h3>
-      <p data-sr="Tehnička optimizacija koja vodi na prvu stranicu Googla. Brže učitavanje, bolji Core Web Vitals i više organskih poseta." data-en="Technical optimization that leads to the first page of Google. Faster loading, better Core Web Vitals and more organic traffic.">Tehnička optimizacija koja vodi na prvu stranicu Googla. Brže učitavanje, bolji Core Web Vitals i više organskih poseta.</p>
-      <div class="service-tag" style="color:#ffbe32;background:rgba(255,190,50,.08);border-color:rgba(255,190,50,.2)">Technical SEO · Analytics · Speed</div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-band">
-  <div class="stat reveal">
-    <div class="stat-num" data-count="50">0</div>
-    <div class="stat-label" data-sr="+ projekata završeno" data-en="+ projects finished">+ projekata završeno</div>
-  </div>
-  <div class="stat reveal" style="transition-delay:.1s">
-    <div class="stat-num" data-count="98">0</div>
-    <div class="stat-label" data-sr="% zadovoljnih klijenata" data-en="% happy clients">% zadovoljnih klijenata</div>
-  </div>
-  <div class="stat reveal" style="transition-delay:.2s">
-    <div class="stat-num" data-count="100">0</div>
-    <div class="stat-label" data-sr="PageSpeed score" data-en="PageSpeed score">PageSpeed score</div>
-  </div>
-  <div class="stat reveal" style="transition-delay:.3s">
-    <div class="stat-num" data-count="5">0</div>
-    <div class="stat-label" data-sr="+ godina iskustva" data-en="+ years experience">+ godina iskustva</div>
-  </div>
-</div>
-
-<!-- PROCESS -->
-<section id="process">
-  <div class="section-label" data-sr="Kako radimo" data-en="How We Work">Kako radimo</div>
-  <h2 class="section-title reveal" data-sr="Naš proces" data-en="Our Process">Naš proces</h2>
-  <p class="section-desc reveal" data-sr="Transparentan i efikasan proces koji vodi do sjajnog finalnog proizvoda." data-en="A transparent and efficient process that leads to a great final product.">Transparentan i efikasan proces koji vodi do sjajnog finalnog proizvoda.</p>
-  <div class="process-steps">
-    <div class="step reveal">
-      <div class="step-num">01</div>
-      <h3 data-sr="Razgovor & Analiza" data-en="Discovery & Analysis">Razgovor & Analiza</h3>
-      <p data-sr="Upoznajemo se sa vašim biznisom, ciljevima i konkurencijom. Definišemo šta i zašto gradimo." data-en="We get to know your business, goals and competition. We define what and why we're building.">Upoznajemo se sa vašim biznisom, ciljevima i konkurencijom. Definišemo šta i zašto gradimo.</p>
-    </div>
-    <div class="step reveal" style="transition-delay:.1s">
-      <div class="step-num">02</div>
-      <h3 data-sr="Dizajn & Prototip" data-en="Design & Prototype">Dizajn & Prototip</h3>
-      <p data-sr="Izrađujemo wireframe i interaktivni prototip koji možete videti i osetiti pre nego što krenemo sa kodom." data-en="We create wireframes and an interactive prototype you can see and feel before we start coding.">Izrađujemo wireframe i interaktivni prototip koji možete videti i osetiti pre nego što krenemo sa kodom.</p>
-    </div>
-    <div class="step reveal" style="transition-delay:.2s">
-      <div class="step-num">03</div>
-      <h3 data-sr="Razvoj & Kodiranje" data-en="Development & Coding">Razvoj & Kodiranje</h3>
-      <p data-sr="Ručno kodiramo svaki element. Čist kod, vrhunske performanse, bez suvišnih biblioteka." data-en="We hand-code every element. Clean code, top performance, no unnecessary libraries.">Ručno kodiramo svaki element. Čist kod, vrhunske performanse, bez suvišnih biblioteka.</p>
-    </div>
-    <div class="step reveal" style="transition-delay:.3s">
-      <div class="step-num">04</div>
-      <h3 data-sr="Testiranje & Lansiranje" data-en="Testing & Launch">Testiranje & Lansiranje</h3>
-      <p data-sr="Temeljno testiramo na svim uređajima i pregledačima, a zatim uspešno lansiramo vaš digitalni proizvod." data-en="We thoroughly test on all devices and browsers, then successfully launch your digital product.">Temeljno testiramo na svim uređajima i pregledačima, a zatim uspešno lansiramo vaš digitalni proizvod.</p>
-    </div>
-    <div class="step reveal" style="transition-delay:.4s">
-      <div class="step-num">05</div>
-      <h3 data-sr="Podrška & Rast" data-en="Support & Growth">Podrška & Rast</h3>
-      <p data-sr="Pratimo analitiku, optimizujemo performanse i podržavamo vas i posle lansiranja." data-en="We monitor analytics, optimize performance and support you even after launch.">Pratimo analitiku, optimizujemo performanse i podržavamo vas i posle lansiranja.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label" data-sr="Naši radovi" data-en="Our Work">Naši radovi</div>
-  <h2 class="section-title reveal" data-sr="Istaknuti projekti" data-en="Featured Projects">Istaknuti projekti</h2>
-  <p class="section-desc reveal" data-sr="Svaki projekat je priča o partnerstvu, inovaciji i rezultatima." data-en="Every project is a story of partnership, innovation and results.">Svaki projekat je priča o partnerstvu, inovaciji i rezultatima.</p>
-  <div class="projects-layout">
-  <div class="phones-showcase reveal">
-
-    <!-- Phone 1: Mobile App -->
-    <div class="showcase-phone phone-one">
-      <div class="sphone-glow sphone-glow-purple"></div>
-      <div class="sphone-frame">
-        <div class="sphone-notch"></div>
-        <div class="sphone-screen app-screen">
-          <div class="app-statusbar"><span>9:41</span><span class="app-status-icons">▲▲▲ 🔋</span></div>
-          <div class="app-toprow">
-            <div class="app-avatar"></div>
-            <div class="app-toprow-text">
-              <div class="app-line app-line-sm"></div>
-              <div class="app-line app-line-md"></div>
-            </div>
-            <div class="app-bell"></div>
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="eyebrow reveal">What we do</div>
+      <h2 class="heading reveal">Three disciplines. One team.</h2>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
           </div>
-          <div class="app-hero-card">
-            <div class="app-hc-tag"></div>
-            <div class="app-hc-title"></div>
-            <div class="app-hc-sub"></div>
-            <div class="app-hc-btn"></div>
-            <div class="app-hc-circle"></div>
-          </div>
-          <div class="app-stats">
-            <div class="app-stat"><span class="app-stat-icon">🔥</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
-            <div class="app-stat"><span class="app-stat-icon">👟</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
-            <div class="app-stat"><span class="app-stat-icon">❤️</span><div class="app-stat-v"></div><div class="app-stat-l"></div></div>
-          </div>
-          <div class="app-rows">
-            <div class="app-row"></div>
-            <div class="app-row"></div>
-            <div class="app-row app-row-short"></div>
-          </div>
+          <div class="service-title">Design</div>
+          <p class="service-desc">Interfaces shaped by real user behavior, not templates. Every user gets the best experience.</p>
         </div>
-        <div class="sphone-home-bar"></div>
-      </div>
-      <div class="sphone-label">
-        <span class="sphone-label-type" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
-        <span class="sphone-label-name" data-sr="Fitness & Zdravlje" data-en="Fitness & Health">Fitness & Zdravlje</span>
-        <a href="#contact" class="sphone-label-link" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
-      </div>
-    </div>
-
-    <!-- Phone 2: Website -->
-    <div class="showcase-phone phone-two">
-      <div class="sphone-glow sphone-glow-green"></div>
-      <div class="sphone-frame">
-        <div class="sphone-notch"></div>
-        <div class="sphone-screen web-screen">
-          <div class="web-nav-bar">
-            <div class="web-logo-pill"></div>
-            <div class="web-nav-links"><span></span><span></span><span></span></div>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
           </div>
-          <div class="web-hero-area">
-            <div class="web-badge"></div>
-            <div class="web-h1 web-h1-a"></div>
-            <div class="web-h1 web-h1-b"></div>
-            <div class="web-p web-p-a"></div>
-            <div class="web-p web-p-b"></div>
-            <div class="web-btns">
-              <div class="web-btn-primary"></div>
-              <div class="web-btn-ghost"></div>
-            </div>
-          </div>
-          <div class="web-cards-row">
-            <div class="web-card"><div class="web-card-icon"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
-            <div class="web-card"><div class="web-card-icon wci-green"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
-            <div class="web-card"><div class="web-card-icon wci-pink"></div><div class="web-card-line"></div><div class="web-card-line web-card-line-sm"></div></div>
-          </div>
-          <div class="web-img-block"></div>
+          <div class="service-title">Engineering</div>
+          <p class="service-desc">Resilient, well-tested code, built to move fast without breaking what came before.</p>
         </div>
-        <div class="sphone-home-bar"></div>
-      </div>
-      <div class="sphone-label">
-        <span class="sphone-label-type" data-sr="Web Stranica" data-en="Website">Web Stranica</span>
-        <span class="sphone-label-name" data-sr="E-Commerce Platforma" data-en="E-Commerce Platform">E-Commerce Platforma</span>
-        <a href="#contact" class="sphone-label-link" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
-      </div>
-    </div>
-
-  </div><!-- /phones-showcase -->
-
-  <!-- PROJECT LIST -->
-  <div class="plist reveal">
-
-    <div class="plist-item">
-      <div class="plist-visual pv-vet">🐾</div>
-      <div class="plist-info">
-        <span class="plist-tag plist-tag-web" data-sr="Web Stranica" data-en="Website">Web Stranica</span>
-        <h3 class="plist-name">VetCare Klinika</h3>
-        <p class="plist-desc" data-sr="Sajt za veterinarsku ordinaciju sa online zakazivanjem pregleda, galerijom ljubimaca i mapom lokacije." data-en="Vet clinic website with online appointment booking, pet gallery and location map.">Sajt za veterinarsku ordinaciju sa online zakazivanjem pregleda, galerijom ljubimaca i mapom lokacije.</p>
-        <div class="plist-stack">React · Next.js · Tailwind</div>
-        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
-      </div>
-    </div>
-
-    <div class="plist-divider"></div>
-
-    <div class="plist-item">
-      <div class="plist-visual pv-barber">✂️</div>
-      <div class="plist-info">
-        <span class="plist-tag plist-tag-app" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
-        <h3 class="plist-name">BarberShop App</h3>
-        <p class="plist-desc" data-sr="iOS & Android aplikacija za zakazivanje termina u berbernici, pregled majstora i sistem lojalnosti." data-en="iOS & Android barber booking app with stylist profiles, time slots and loyalty rewards.">iOS & Android aplikacija za zakazivanje termina u berbernici, pregled majstora i sistem lojalnosti.</p>
-        <div class="plist-stack">React Native · Firebase</div>
-        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
-      </div>
-    </div>
-
-    <div class="plist-divider"></div>
-
-    <div class="plist-item">
-      <div class="plist-visual pv-gym">💪</div>
-      <div class="plist-info">
-        <span class="plist-tag plist-tag-app" data-sr="Mobilna Aplikacija" data-en="Mobile App">Mobilna Aplikacija</span>
-        <h3 class="plist-name">IronPeak Gym</h3>
-        <p class="plist-desc" data-sr="Aplikacija za teretanu sa treninzima, praćenjem napretka, planom ishrane i pristupom članova." data-en="Gym app with workout plans, progress tracking, nutrition guide and member access control.">Aplikacija za teretanu sa treninzima, praćenjem napretka, planom ishrane i pristupom članova.</p>
-        <div class="plist-stack">Flutter · Node.js · PostgreSQL</div>
-        <a href="#contact" class="plist-cta" data-sr="Zatraži sličan →" data-en="Request similar →">Zatraži sličan →</a>
-      </div>
-    </div>
-
-  </div><!-- /plist -->
-
-  </div><!-- /projects-layout -->
-</section>
-
-<!-- TECH STACK -->
-<section id="tech">
-  <div class="section-label" data-sr="Tehnologije" data-en="Technologies">Tehnologije</div>
-  <h2 class="section-title reveal" data-sr="Naš tech stack" data-en="Our tech stack">Naš tech stack</h2>
-  <p class="section-desc reveal" style="margin:0 auto" data-sr="Koristimo moderne i proverene tehnologije koje garantuju kvalitet i dugoročnost." data-en="We use modern and proven technologies that guarantee quality and longevity.">Koristimo moderne i proverene tehnologije koje garantuju kvalitet i dugoročnost.</p>
-  <div class="tech-grid reveal">
-    <div class="tech-pill"><span>⚛️</span> React</div>
-    <div class="tech-pill"><span>▲</span> Next.js</div>
-    <div class="tech-pill"><span>📱</span> React Native</div>
-    <div class="tech-pill"><span>🐦</span> Flutter</div>
-    <div class="tech-pill"><span>🍎</span> Swift</div>
-    <div class="tech-pill"><span>🤖</span> Kotlin</div>
-    <div class="tech-pill"><span>🟦</span> TypeScript</div>
-    <div class="tech-pill"><span>🟩</span> Node.js</div>
-    <div class="tech-pill"><span>🐍</span> Python</div>
-    <div class="tech-pill"><span>🔥</span> Firebase</div>
-    <div class="tech-pill"><span>☁️</span> AWS</div>
-    <div class="tech-pill"><span>🐋</span> Docker</div>
-    <div class="tech-pill"><span>🗄️</span> PostgreSQL</div>
-    <div class="tech-pill"><span>🌿</span> MongoDB</div>
-    <div class="tech-pill"><span>🎨</span> Figma</div>
-    <div class="tech-pill"><span>🔍</span> SEO Tools</div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="section-label" data-sr="Česta pitanja" data-en="FAQ">Česta pitanja</div>
-  <h2 class="section-title reveal" data-sr="Imate pitanja?" data-en="Have questions?">Imate pitanja?</h2>
-  <div class="faq-list">
-    <div class="faq-item reveal">
-      <div class="faq-q">
-        <span data-sr="Koliko košta izrada web sajta?" data-en="How much does a website cost?">Koliko košta izrada web sajta?</span>
-        <div class="faq-arrow">›</div>
-      </div>
-      <div class="faq-a" data-sr="Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 200€, dok kompleksne web aplikacije mogu biti i 800€+. Nakon razgovora dajemo besplatnu procenu." data-en="The price depends on the complexity of the project. Simpler informational sites start from €200, while complex web apps can be €800+. After a conversation we provide a free estimate.">Cena zavisi od kompleksnosti projekta. Jednostavniji informativni sajtovi kreću od 200€, dok kompleksne web aplikacije mogu biti i 800€+. Nakon razgovora dajemo besplatnu procenu.</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">
-        <span data-sr="Koliko traje izrada web sajta?" data-en="How long does website development take?">Koliko traje izrada web sajta?</span>
-        <div class="faq-arrow">›</div>
-      </div>
-      <div class="faq-a" data-sr="Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta." data-en="An average website takes 1-2 weeks. Mobile apps usually 3-6 weeks. Complex platforms longer. We always define realistic deadlines at the start of the project.">Prosečan sajt se radi 1-2 nedelje. Mobilne aplikacije obično 3-6 nedelja. Kompleksne platforme i više. Uvek definišemo realne rokove na početku projekta.</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">
-        <span data-sr="Da li pružate podršku nakon lansiranja?" data-en="Do you provide support after launch?">Da li pružate podršku nakon lansiranja?</span>
-        <div class="faq-arrow">›</div>
-      </div>
-      <div class="faq-a" data-sr="Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu." data-en="Yes! We provide monthly support, updates and monitoring. You can choose a support package that suits your needs and budget.">Da! Pružamo mesečnu podršku, ažuriranja i monitoring. Možete izabrati paket podrške koji odgovara vašim potrebama i budžetu.</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">
-        <span data-sr="Da li mogu da vidim sajt pre lansiranja?" data-en="Can I see the site before launch?">Da li mogu da vidim sajt pre lansiranja?</span>
-        <div class="faq-arrow">›</div>
-      </div>
-      <div class="faq-a" data-sr="Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja." data-en="Of course! Every project goes through review phases. We first present the design, then the prototype, then the developed version, all before the final launch.">Naravno! Svaki projekat prolazi kroz faze pregleda. Najpre predstavljamo dizajn, pa prototip, pa razvijenu verziju, sve pre finalnog lansiranja.</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">
-        <span data-sr="Radite li mobilne aplikacije za oba sistema?" data-en="Do you build apps for both platforms?">Radite li mobilne aplikacije za oba sistema?</span>
-        <div class="faq-arrow">›</div>
-      </div>
-      <div class="faq-a" data-sr="Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat." data-en="Yes! We build native iOS and Android apps, as well as cross-platform solutions (React Native, Flutter) when that's the optimal choice for your project.">Da! Radimo nativne iOS i Android aplikacije, kao i cross-platform rešenja (React Native, Flutter) kada je to optimalan izbor za vaš projekat.</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="section-label" data-sr="Kontakt" data-en="Contact">Kontakt</div>
-    <h2 class="section-title reveal" data-sr="Pokrenimo nešto<br>zajedno" data-en="Let's build something<br>together">Pokrenimo nešto<br>zajedno</h2>
-    <p class="section-desc reveal" style="margin:0 auto" data-sr="Imate ideju? Javite nam se i u roku od 24 sata dajemo vam besplatnu procenu." data-en="Have an idea? Contact us and within 24 hours we'll give you a free estimate.">Imate ideju? Javite nam se i u roku od 24 sata dajemo vam besplatnu procenu.</p>
-    <div class="contact-card reveal">
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <input type="hidden" name="access_key" value="1f98ac3e-6f6f-40bd-9c88-6c8170db8228">
-        <input type="hidden" name="subject" value="Nova poruka sa Nuvio Development sajta">
-        <input type="hidden" name="from_name" value="Nuvio Development Website">
-        <div class="form-row">
-          <div class="form-field">
-            <label data-sr="Ime" data-en="Name">Ime</label>
-            <input type="text" name="name" placeholder="Marko Marković" required>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18.7 8.7l-5.4 5.4-3-3-4.3 4.3"></path></svg>
           </div>
-          <div class="form-field">
-            <label data-sr="Email" data-en="Email">Email</label>
-            <input type="email" name="email" placeholder="marko@firma.rs" required>
-          </div>
+          <div class="service-title">Scale</div>
+          <p class="service-desc">Infrastructure that grows quietly in the background as your product and your team grow.</p>
         </div>
-        <div class="form-field">
-          <label data-sr="Tip projekta" data-en="Project type">Tip projekta</label>
-          <select name="project_type">
-            <option data-sr="Web sajt" data-en="Website">Web sajt</option>
-            <option data-sr="Mobilna aplikacija" data-en="Mobile application">Mobilna aplikacija</option>
-            <option data-sr="Web sajt + Mobilna aplikacija" data-en="Website + Mobile application">Web sajt + Mobilna aplikacija</option>
-            <option data-sr="Dizajn" data-en="Design">Dizajn</option>
-            <option data-sr="Nešto drugo" data-en="Something else">Nešto drugo</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label data-sr="Poruka" data-en="Message">Poruka</label>
-          <textarea name="message" placeholder="Opišite vaš projekat..." data-en-placeholder="Describe your project..."></textarea>
-        </div>
-        <button type="submit" class="submit-btn">
-          <span data-sr="Pošalji poruku →" data-en="Send Message →">Pošalji poruku →</span>
-        </button>
-      </form>
+      </div>
     </div>
-    <div class="contact-links">
-      <a href="mailto:nuvio.devgroup@gmail.com" class="contact-link">
-        <div class="contact-link-icon">✉️</div>
-        <span>nuvio.devgroup@gmail.com</span>
-      </a>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
+  <!-- QUOTE -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="quote-wrap">
+        <div class="quote-mark reveal">"</div>
+        <blockquote class="reveal">The future belongs to those who build it.</blockquote>
+        <div class="quote-attr reveal"><strong>Nuvio</strong> Development Studio</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="eyebrow reveal">Start a project</div>
+      <h2 class="heading reveal">Let's build something worth using.</h2>
+      <div class="cta-buttons reveal">
+        <a href="mailto:hello@nuvio.dev" class="btn btn-primary">Start a project</a>
+        <a href="#services" class="btn btn-secondary">See our work →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Nuvio<span>Development</span></div>
-    <div class="footer-copy" data-sr="© 2025 Nuvio Development. Sva prava zadržana." data-en="© 2025 Nuvio Development. All rights reserved.">© 2026 Nuvio Development. Sva prava zadržana.</div>
-    <div class="footer-links">
-      <a href="#" data-sr="Privatnost" data-en="Privacy">Privatnost</a>
-      <a href="#" data-sr="Uslovi" data-en="Terms">Uslovi</a>
-      <a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-logo">Nuvio</div>
+      <ul class="footer-links">
+        <li><a href="#services">Design</a></li>
+        <li><a href="#services">Engineering</a></li>
+        <li><a href="#stats">Work</a></li>
+        <li><a href="mailto:hello@nuvio.dev">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nuvio Development. All rights reserved.</span>
+      <span>Belgrade, Serbia</span>
     </div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+(function(){
+  // ---------- NAV BACKGROUND ON SCROLL ----------
+  var nav = document.getElementById('nav');
+  function updateNav(){
+    if(window.scrollY > 40){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ---------- HERO SCROLL-SCRUB ANIMATION ----------
+  var FRAME_COUNT = 101;
+  var canvas = document.getElementById('heroCanvas');
+  var ctx = canvas.getContext('2d');
+  var heroScrub = document.getElementById('heroScrub');
+  var heroContent = document.getElementById('heroContent');
+  var scrollCue = document.getElementById('scrollCue');
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- HERO CAPTIONS (scroll-linked) ----------
+  var captions = Array.prototype.slice.call(document.querySelectorAll('.hero-caption')).map(function(el){
+    return {
+      el: el,
+      start: parseFloat(el.getAttribute('data-start')),
+      end: parseFloat(el.getAttribute('data-end')),
+      dy: parseFloat(el.getAttribute('data-dy')) || 0,
+      dx: parseFloat(el.getAttribute('data-dx')) || 0
+    };
+  });
+
+  function updateCaptions(progress){
+    for(var i = 0; i < captions.length; i++){
+      var c = captions[i];
+      var span = c.end - c.start;
+      var t = span > 0 ? (progress - c.start) / span : 0; // 0..1 across this caption's active window
+      var visT = Math.max(0, Math.min(1, t));
+
+      // fade in over first 18% of window, hold, fade out over last 18%
+      var fadeIn = Math.min(1, visT / 0.18);
+      var fadeOut = Math.min(1, (1 - visT) / 0.18);
+      var opacity = Math.max(0, Math.min(fadeIn, fadeOut));
+      if(t < 0 || t > 1) opacity = 0;
+
+      // parallax: travels from +dy/+dx (below/offset) to -dy/-dx across the whole window
+      var travel = (0.5 - visT) * 2; // 1 at start, 0 at mid, -1 at end
+      var ty = c.dy * travel;
+      var tx = c.dx * travel;
+
+      c.el.style.opacity = opacity;
+      c.el.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px)';
+    }
+  }
+
+  function frameSrc(i){
+    var n = String(i).padStart(3, '0');
+    return 'nuvioassets/frames/frame_' + n + '.jpg';
+  }
+
+  var frames = new Array(FRAME_COUNT);
+  var loaded = new Array(FRAME_COUNT).fill(false);
+  var currentDrawn = -1;
+
+  function loadFrame(i){
+    if(frames[i]) return;
+    var img = new Image();
+    img.onload = function(){
+      loaded[i] = true;
+      if(i === 0) drawFrame(0);
+    };
+    img.src = frameSrc(i);
+    frames[i] = img;
+  }
+
+  // Load first frame immediately, rest progressively
+  loadFrame(0);
+  var loadIndex = 1;
+  function loadNextBatch(){
+    var batch = 6;
+    for(var b = 0; b < batch && loadIndex < FRAME_COUNT; b++, loadIndex++){
+      loadFrame(loadIndex);
+    }
+    if(loadIndex < FRAME_COUNT){
+      (window.requestIdleCallback || function(cb){ setTimeout(cb, 16); })(loadNextBatch);
+    }
+  }
+  loadNextBatch();
+
+  function nearestLoaded(i){
+    if(loaded[i]) return i;
+    for(var d = 1; d < FRAME_COUNT; d++){
+      var lo = i - d, hi = i + d;
+      if(lo >= 0 && loaded[lo]) return lo;
+      if(hi < FRAME_COUNT && loaded[hi]) return hi;
+    }
+    return 0;
+  }
+
+  function resizeCanvas(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = heroScrub.clientWidth || window.innerWidth;
+    var h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if(currentDrawn >= 0) drawFrame(currentDrawn, true);
+  }
+
+  function drawFrame(i, force){
+    var idx = loaded[i] ? i : nearestLoaded(i);
+    if(!force && idx === currentDrawn) return;
+    currentDrawn = idx;
+    var img = frames[idx];
+    if(!img || !img.complete || img.naturalWidth === 0) return;
+
+    var cw = canvas.width / (Math.min(window.devicePixelRatio || 1, 2));
+    var ch = canvas.height / (Math.min(window.devicePixelRatio || 1, 2));
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var canvasRatio = cw / ch;
+    var imgRatio = iw / ih;
+    var sx, sy, sw, sh;
+    if(imgRatio > canvasRatio){
+      sh = ih;
+      sw = ih * canvasRatio;
+      sx = (iw - sw) / 2;
+      sy = 0;
+    } else {
+      sw = iw;
+      sh = iw / canvasRatio;
+      sx = 0;
+      sy = (ih - sh) / 2;
+    }
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var rect = heroScrub.getBoundingClientRect();
+      var total = heroScrub.offsetHeight - window.innerHeight;
+      var progress = total > 0 ? (-rect.top) / total : 0;
+      progress = Math.max(0, Math.min(1, progress));
+
+      var frameIdx = Math.round(progress * (FRAME_COUNT - 1));
+      drawFrame(frameIdx);
+
+      // fade hero text out over the first ~35% of scrub, fade scroll cue out even sooner
+      var textOpacity = 1 - Math.min(1, progress / 0.35);
+      var cueOpacity = 1 - Math.min(1, progress / 0.08);
+      heroContent.style.opacity = textOpacity;
+      heroContent.style.transform = 'translateY(' + (progress * 40) + 'px)';
+      scrollCue.style.opacity = cueOpacity;
+
+      updateCaptions(progress);
+
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  onScroll();
+
+  // ---------- SCROLL REVEALS ----------
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reducedMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+
 </body>
 </html>
